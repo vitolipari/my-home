@@ -2,7 +2,8 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import {Auth} from '../../services/auth';
+import {AuthService} from '../../services/auth';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -27,7 +28,7 @@ import {Auth} from '../../services/auth';
 })
 export class SignUpPage {
   private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(Auth);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   readonly loading = signal(false);
@@ -40,7 +41,7 @@ export class SignUpPage {
     confirmPassword: ['', [Validators.required]]
   });
 
-  submit(): void {
+  async submit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -56,17 +57,17 @@ export class SignUpPage {
     this.loading.set(true);
     this.message.set('');
 
-    this.authService.signUp(value).subscribe({
-      next: () => {
-        this.loading.set(false);
-        void this.router.navigate(['/access/confirm'], {
-          queryParams: { email: value.email }
-        });
-      },
-      error: () => {
-        this.loading.set(false);
-        this.message.set('Registrazione non riuscita.');
-      }
-    });
+    try {
+      await this.authService.signUp(value);
+
+      await this.router.navigate(['/access/confirm'], {
+        queryParams: { email: value.email }
+      });
+
+    } catch {
+      this.message.set('Registrazione non riuscita.');
+    } finally {
+      this.loading.set(false);
+    }
   }
 }

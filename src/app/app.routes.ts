@@ -1,72 +1,39 @@
 import { Routes } from '@angular/router';
-import {guestGuard} from './guards/guest.guard';
-import {authGuard} from './guards/auth.guard';
+import { routeAccessGuard } from './guards/route-access.guard';
+import { guestGuard } from './guards/guest.guard';
+import {SignInPage} from './pages/sign-in/signin.page';
 
 export const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'access'
-  },
-
-  {
-    path: 'access',
+    path: 'access/sign-in',
+    canActivate: [guestGuard],
     loadComponent: () =>
-      import('./pages/access/access.page').then(m => m.AccessPage),
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'sign-in'
-      },
-      {
-        path: 'sign-in',
-        canActivate: [guestGuard],
-        loadComponent: () =>
-          import('./pages/sign-in/signin.page').then(m => m.SignInPage)
-      },
-      {
-        path: 'sign-up',
-        canActivate: [guestGuard],
-        loadComponent: () =>
-          import('./pages/sign-up/signup.page').then(m => m.SignUpPage)
-      },
-      {
-        path: 'confirm',
-        canActivate: [guestGuard],
-        loadComponent: () =>
-          import('./pages/confirm-signup/confirm-signup.page').then(m => m.ConfirmPage)
-      },
-      {
-        path: 'forgot-password',
-        canActivate: [guestGuard],
-        loadComponent: () =>
-          import('./pages/forgot-password/forgot-password.page').then(m => m.ForgotPasswordPage)
+      import('./pages/sign-in/signin.page').then(m => m.SignInPage)
+  },
+  {
+    path: 'dashboard',
+    canActivate: [routeAccessGuard],
+    data: {
+      accessControl: {
+        requireEnabled: true,
+        requireConfirmedEmail: true,
+        requiredRoles: ['USER', 'MANAGER', 'ADMIN']
       }
-    ]
-  },
-
-  {
-    path: 'temp-link/:token',
+    },
     loadComponent: () =>
-      import('./pages/tmp-sign-link/tmp-sign-link.page').then(m => m.TempLinkPage)
+      import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage)
   },
-
   {
-    path: 'home-empty',
+    path: 'admin',
+    canActivate: [routeAccessGuard],
+    data: {
+      accessControl: {
+        requireEnabled: true,
+        requireConfirmedEmail: true,
+        requiredRoles: ['ADMIN']
+      }
+    },
     loadComponent: () =>
-      import('./pages/landing-empty/landing-empty.page').then(m => m.LandingEmptyPage)
-  },
-
-  {
-    path: 'startup',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./pages/start/start.page').then(m => m.StartupPage)
-  },
-
-  {
-    path: '**',
-    redirectTo: 'access'
+      import('./pages/admin/admin.page').then(m => m.AdminPage)
   }
 ];

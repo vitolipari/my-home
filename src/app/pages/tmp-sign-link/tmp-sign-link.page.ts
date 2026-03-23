@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {Auth} from '../../services/auth';
+import {AuthService} from '../../services/auth';
 
 @Component({
   selector: 'app-temp-link',
@@ -9,7 +9,7 @@ import {Auth} from '../../services/auth';
 })
 export class TempLinkPage {
   private readonly route = inject(ActivatedRoute);
-  private readonly authService = inject(Auth);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   constructor() {

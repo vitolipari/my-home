@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-sign-in',
@@ -27,7 +27,7 @@ import { Auth } from '../../services/auth';
 })
 export class SignInPage {
   private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(Auth);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   readonly loading = signal(false);
@@ -38,7 +38,7 @@ export class SignInPage {
     password: ['', [Validators.required]]
   });
 
-  submit(): void {
+  async submit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -47,28 +47,13 @@ export class SignInPage {
     this.loading.set(true);
     this.errorMessage.set('');
 
-    this.authService.signIn(this.form.getRawValue()).subscribe({
-      next: (result) => {
-        this.loading.set(false);
-
-        switch (result.status) {
-          case 'SUCCESS':
-            void this.router.navigate(['/startup']);
-            break;
-
-          case 'INVALID_CREDENTIALS':
-            this.errorMessage.set('Credenziali non valide.');
-            break;
-
-          case 'SERVER_UNREACHABLE':
-            void this.router.navigate(['/home-empty']);
-            break;
-        }
-      },
-      error: () => {
-        this.loading.set(false);
-        this.errorMessage.set('Errore inatteso.');
-      }
-    });
+    try {
+      await this.authService.login(this.form.getRawValue());
+      await this.router.navigate(['/startup']);
+    } catch (error) {
+      this.errorMessage.set('Login non riuscito o server non raggiungibile.');
+    } finally {
+      this.loading.set(false);
+    }
   }
 }

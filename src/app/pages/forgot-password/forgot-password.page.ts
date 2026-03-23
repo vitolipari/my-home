@@ -1,55 +1,104 @@
-import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import {Auth} from '../../services/auth';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { AuthApiService } from '../../services/auth-api';
+import { LoggedUser, LoginRequest } from '../../models/auth.models';
 
-@Component({
-  selector: 'app-forgot-password',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  template: `
-    <h1>Password dimenticata</h1>
-
-    <form [formGroup]="form" (ngSubmit)="submit()">
-      <input type="email" formControlName="email" placeholder="Email" />
-      <button type="submit" [disabled]="loading()">Invia</button>
-    </form>
-
-    <p *ngIf="message()">{{ message() }}</p>
-
-    <a routerLink="/access/sign-in">Torna al login</a>
-  `
+@Injectable({
+  providedIn: 'root'
 })
-export class ForgotPasswordPage {
-  private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(Auth);
+export class AuthService {
+  private readonly authApi = inject(AuthApiService);
 
-  readonly loading = signal(false);
-  readonly message = signal('');
+  private readonly tokenKey = 'auth_token';
+  private readonly userKey = 'logged_user';
 
-  readonly form = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]]
-  });
+  readonly currentUser = signal<LoggedUser | null>(this.readUserFromStorage());
+  readonly isAuthenticated = computed(() => !!this.currentUser() || this.hasToken());
 
-  submit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
+  async login(payload: LoginRequest): Promise<LoggedUser> {
+    const response = await firstValueFrom(this.authApi.login(payload));
+    this.saveToken(response.accessToken);
+
+    const user = await this.loadCurrentUser();
+    return user;
+  }
+
+  async loadCurrentUser(): Promise<LoggedUser> {
+    const user = await firstValueFrom(this.authApi.me());
+    this.saveLoggedUser(user);
+    return user;
+  }
+
+  async ensureUserLoaded(): Promise<LoggedUser | null> {
+    const current = this.currentUser();
+    if (current) {
+      return current;
     }
 
-    this.loading.set(true);
-    this.message.set('');
+    if (!this.hasToken()) {
+      return null;
+    }
 
-    this.authService.forgotPassword(this.form.getRawValue().email).subscribe({
-      next: () => {
-        this.loading.set(false);
-        this.message.set('Email di recupero inviata.');
-      },
-      error: () => {
-        this.loading.set(false);
-        this.message.set('Invio non riuscito.');
-      }
-    });
+    try {
+      return await this.loadCurrentUser();
+    } catch {
+      this.clearSession();
+      return null;
+    }
+  }
+
+  async forgotPassword(email: string): Promise<void> {
+    await firstValueFrom(this.authApi.forgotPassword(email));
+  }
+
+  async logout(): Promise<void> {
+    try {
+      await firstValueFrom(this.authApi.logout());
+    } catch {
+      // ignora eventuali errori server in logout
+    } finally {
+      this.clearSession();
+    }
+  }
+
+  saveToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  hasToken(): boolean {
+    return !!this.getToken();
+  }
+
+  saveLoggedUser(user: LoggedUser): void {
+    localStorage.setItem(this.userKey, JSON.stringify(user));
+    this.currentUser.set(user);
+  }
+
+  getLoggedUser(): LoggedUser | null {
+    return this.currentUser();
+  }
+
+  clearSession(): void {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
+    this.currentUser.set(null);
+  }
+
+  private readUserFromStorage(): LoggedUser | null {
+    const raw = localStorage.getItem(this.userKey);
+
+    if (!raw) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(raw) as LoggedUser;
+    } catch {
+      return null;
+    }
   }
 }

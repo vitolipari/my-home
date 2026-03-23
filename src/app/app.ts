@@ -1,6 +1,6 @@
 import {Component, inject, signal} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {SwUpdate} from './services/sw-update';
+import {SwUpdateService} from './services/sw-update';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,8 @@ import {SwUpdate} from './services/sw-update';
 export class App {
   protected readonly title = signal('my-home');
 
-  private readonly swUpdateService = inject(SwUpdate);
+
+  private readonly swUpdateService = inject<SwUpdateService>(SwUpdateService);
 
   constructor() {
     this.swUpdateService.init();

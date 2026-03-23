@@ -1,21 +1,22 @@
-import {inject, Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   ConfirmRequest,
+  LoggedUser,
   LoginRequest,
   LoginResponse,
   SignUpRequest
-} from '../models/auth.model';
+} from '../models/auth.models';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class AuthApi {
+export class AuthApiService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/auth';
 
-  signIn(payload: LoginRequest): Observable<LoginResponse> {
+  login(payload: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.baseUrl}/signin`, payload);
   }
 
@@ -31,7 +32,11 @@ export class AuthApi {
     return this.http.post<void>(`${this.baseUrl}/forgot-password`, { email });
   }
 
-  checkSession(token: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.baseUrl}/check-session`, { token });
+  me(): Observable<LoggedUser> {
+    return this.http.get<LoggedUser>(`${this.baseUrl}/me`);
+  }
+
+  logout(): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/logout`, {});
   }
 }

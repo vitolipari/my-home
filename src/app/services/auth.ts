@@ -1,69 +1,79 @@
-import {inject, Injectable, signal} from '@angular/core';
-import { Router } from '@angular/router';
-import { catchError, map, Observable, of, tap } from 'rxjs';
-import { AuthApi } from './auth-api';
-import { LoginFlowResult, LoginRequest, SignUpRequest, ConfirmRequest } from '../models/auth.model';
-import {LoggedUser} from '../guards/owner-house-path-access';
-
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { AuthApiService } from './auth-api';
+import {
+  ConfirmRequest,
+  LoggedUser,
+  LoginRequest,
+  SignUpRequest
+} from '../models/auth.models';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class Auth {
-  private readonly authApi = inject(AuthApi);
-  private readonly router = inject(Router);
+export class AuthService {
+  private readonly authApi = inject(AuthApiService);
 
   private readonly tokenKey = 'auth_token';
-  private readonly temporaryLinkKey = 'temporary_link_context';
   private readonly userKey = 'logged_user';
+  private readonly temporaryLinkKey = 'temporary_link_context';
 
-  readonly authenticated = signal<boolean>(this.hasToken());
+  readonly currentUser = signal<LoggedUser | null>(this.readUserFromStorage());
+  readonly isAuthenticated = computed(() => !!this.currentUser() || this.hasToken());
 
-  signIn(payload: LoginRequest): Observable<LoginFlowResult> {
-    return this.authApi.signIn(payload).pipe(
-      map(response => {
-        if (response.valid && response.token) {
-          return {
-            status: 'SUCCESS',
-            token: response.token
-          } satisfies LoginFlowResult;
-        }
+  async login(payload: LoginRequest): Promise<LoggedUser> {
+    const response = await firstValueFrom(this.authApi.login(payload));
+    this.saveToken(response.accessToken);
 
-        return {
-          status: 'INVALID_CREDENTIALS'
-        } satisfies LoginFlowResult;
-      }),
-      tap(result => {
-        if (result.status === 'SUCCESS') {
-          this.saveToken(result.token);
-          this.authenticated.set(true);
-        }
-      }),
-      catchError(() =>
-        of({
-          status: 'SERVER_UNREACHABLE'
-        } satisfies LoginFlowResult)
-      )
-    );
+    const user = await this.loadCurrentUser();
+    return user;
   }
 
-  signUp(payload: SignUpRequest): Observable<void> {
-    return this.authApi.signUp(payload);
+  async signUp(payload: SignUpRequest): Promise<void> {
+    await firstValueFrom(this.authApi.signUp(payload));
   }
 
-  confirm(payload: ConfirmRequest): Observable<void> {
-    return this.authApi.confirm(payload);
+  async confirm(payload: ConfirmRequest): Promise<void> {
+    await firstValueFrom(this.authApi.confirm(payload));
   }
 
-  forgotPassword(email: string): Observable<void> {
-    return this.authApi.forgotPassword(email);
+  async forgotPassword(email: string): Promise<void> {
+    await firstValueFrom(this.authApi.forgotPassword(email));
   }
 
-  logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    sessionStorage.removeItem(this.temporaryLinkKey);
-    this.authenticated.set(false);
-    void this.router.navigate(['/access/sign-in']);
+  async loadCurrentUser(): Promise<LoggedUser> {
+    const user = await firstValueFrom(this.authApi.me());
+    this.saveLoggedUser(user);
+    return user;
+  }
+
+  async ensureUserLoaded(): Promise<LoggedUser | null> {
+    const current = this.currentUser();
+
+    if (current) {
+      return current;
+    }
+
+    if (!this.hasToken()) {
+      return null;
+    }
+
+    try {
+      return await this.loadCurrentUser();
+    } catch {
+      this.clearSession();
+      return null;
+    }
+  }
+
+  async logout(): Promise<void> {
+    try {
+      await firstValueFrom(this.authApi.logout());
+    } catch {
+      // ignora eventuali errori server in logout
+    } finally {
+      this.clearSession();
+    }
   }
 
   saveToken(token: string): void {
@@ -78,6 +88,15 @@ export class Auth {
     return !!this.getToken();
   }
 
+  saveLoggedUser(user: LoggedUser): void {
+    localStorage.setItem(this.userKey, JSON.stringify(user));
+    this.currentUser.set(user);
+  }
+
+  getLoggedUser(): LoggedUser | null {
+    return this.currentUser();
+  }
+
   storeTemporaryLinkContext(tempToken: string): void {
     sessionStorage.setItem(this.temporaryLinkKey, tempToken);
   }
@@ -90,8 +109,14 @@ export class Auth {
     sessionStorage.removeItem(this.temporaryLinkKey);
   }
 
+  clearSession(): void {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
+    this.clearTemporaryLinkContext();
+    this.currentUser.set(null);
+  }
 
-  getLoggedUser(): LoggedUser | null {
+  private readUserFromStorage(): LoggedUser | null {
     const raw = localStorage.getItem(this.userKey);
 
     if (!raw) {
@@ -104,13 +129,4 @@ export class Auth {
       return null;
     }
   }
-
-  saveLoggedUser(user: LoggedUser): void {
-    localStorage.setItem(this.userKey, JSON.stringify(user));
-  }
-
-  clearLoggedUser(): void {
-    localStorage.removeItem(this.userKey);
-  }
-
 }
