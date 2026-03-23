@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+
+<h1>Sign In</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <input type="email" formControlName="email" placeholder="Email" />
+  <input type="password" formControlName="password" placeholder="Password" />
+
+  <button type="submit" [disabled]="loading()">Accedi</button>
+</form>
+
+<p *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+<a routerLink="/access/forgot-password">Password dimenticata</a>
+<br />
+<a routerLink="/access/sign-up">Registrati</a>
+
+</body>
+</html>

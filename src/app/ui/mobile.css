@@ -1,0 +1,12 @@
+@media
+only screen
+and (min-width: 40px)
+and (max-width: 640px)
+and (orientation: portrait)
+{
+    #desktop,
+    #tablet
+    {
+        display: none;
+    }
+}

@@ -1,0 +1,48 @@
+
+
+/* visibile per tutto */
+[data-theme='light'] {
+
+    /*  Header  */
+
+    /* Colori */
+    --color-level-1: #f0f0f0;
+    --color-level-2: #eee;
+    --color-level-3: #e0e0e0;
+    --color-level-3: #ddd;
+
+    --color-anti-level-1: #252628;
+    --color-anti-level-2: #444;
+    --color-anti-level-3: #888;
+    --color-anti-level-4: #aaa;
+    --color-anti-level-5: #ddd;
+
+    --color-accent-level-1: #080;
+    --color-accent-level-2: #252628;
+    --color-accent-level-3: #252628;
+
+    --color-disabled-1: #454;
+    --color-disabled-2: #575;
+    --color-disabled-3: #8a8;
+
+    --color-evident-1: #080;
+    --color-evident-2: #38f;
+
+    --color-inner-glow: #385;
+    --color-outer-glow: #0f0;
+
+    --color-red-inner-glow: #f88a;
+    --color-red-outer-glow: #f13;
+
+    --light-color: #fff;
+    --dark-color: #000;
+    --theme-color: #fff;
+
+    --big-opacity-theme-color: #fffc;
+    --middle-opacity-theme-color: #fff7;
+    --small-opacity-theme-color: #fff1;
+    --middle-opacity-inverse-theme-color: #0002;
+    --small-black-color: #0003;
+
+
+}

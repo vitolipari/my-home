@@ -1,0 +1,49 @@
+
+
+/* visibile per tutto */
+[data-theme='dark'] {
+
+
+    /*  Header  */
+
+    /* Colori */
+    --color-level-1: #121212;
+    --color-level-2: #212121;
+    --color-level-3: #414141;
+
+    --color-anti-level-1: #aaa;
+    --color-anti-level-2: #888;  /* todo */
+    --color-anti-level-3: #666;  /* todo */
+    --color-anti-level-4: #555;  /* todo */
+    --color-anti-level-5: #444;  /* todo */
+
+    --color-accent-level-1: #252628;  /* todo */
+    --color-accent-level-2: #252628;  /* todo */
+    --color-accent-level-3: #252628;  /* todo */
+
+    --color-disabled-1: #454;  /* todo */
+    --color-disabled-2: #575;  /* todo */
+    --color-disabled-3: #8a8;  /* todo */
+
+    --color-evident-1: #080;  /* todo */
+    --color-evident-2: #0aff97;  /* todo */
+
+    --color-inner-glow: #385;  /* todo */
+    --color-outer-glow: #0f0;  /* todo */
+
+    --color-red-inner-glow: #f88a;  /* todo */
+    --color-red-outer-glow: #f13;  /* todo */
+
+    --light-color: #fff;  /* todo */
+    --dark-color: #000;  /* todo */
+    --theme-color: #fff;  /* todo */
+
+
+    --different-blur-for-theme: 2px;  /* todo */
+
+    --big-opacity-theme-color: #fffc;
+    --middle-opacity-theme-color: #fff7;
+    --small-opacity-theme-color: #0006;
+    --middle-opacity-inverse-theme-color: #fff2;
+    --small-black-color: #0003;
+}

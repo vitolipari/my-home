@@ -1,1 +1,109 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600');
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+
+@import "app/ui/mobile.css";
+@import "app/ui/tablet.css";
+@import "app/ui/desktop.css";
+
+@import "app/ui/light.css";
+@import "app/ui/dark.css";
+
+@import "primeicons/primeicons.css";
+
+:root {
+
+  touch-action: none;
+
+
+  /* Font */
+  --mono-font: 'Ubuntu', -apple-system, 'Helvetica Neue', 'Roboto', BlinkMacSystemFont, 'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', sans-serif;
+  --page-font: 'Prompt', 'Montserrat', 'Calisto MT', 'Calisto', 'Trebuchet MS', sans-serif;
+  --main-font: 'Segoe UI', 'Candara', 'Trebuchet MS', 'Varela Round', Verdana, "Open Sans Regular", "Arial Unicode MS Regular", sans-serif;
+  --reading-font: Georgia, 'Lora', 'Libre Baskerville', 'Adobe Caslon';
+  --orbitron-font: Orbitron, sans-serif;
+
+  /* Dimensioni */
+  --small-font-size: 12px;
+  --main-font-size: 14px;
+  --main-font-section-size: 14px;
+  --main-medium-big-font-size: 16px;
+  --main-big-font-size: 20px;
+  --big-font-size: 24px;
+  --main-huge-font-size: 30px;
+  --main-40-font-size: 40px;
+  --main-giga-font-size: 52px;
+
+  --transition-time: 0.4s;
+
+  /*--slash-tile-bg-image: url('/imgs/slashTile_white_05.png');*/
+  /*--slash-tile-bg-image: url('/imgs/slashTile_black_025.png');*/
+
+  /* common */
+  --light-sky-color: #61dafb;
+  --lightBlue: #2196f3;
+  --sky-color: #38f;
+  --dark-sky-color: #215ac5;
+  --celestino: #18f2;
+  --darkGreen: #183;
+  --very-light-gray-green: #4fa13e33;
+  --good-green: #1fa;
+  --gray: #c3c3c3;
+  --medium-gray: #888;
+  --full-white: #fff;
+
+
+
+  --dark-red-color: #d00;
+  --medium-red-color: #f35;
+  --red-opacity: #f353;
+  --soft-blue-gray: #525f77;
+
+
+  --header-height: 2rem;
+
+  --max-panel-width: 1024px;
+
+}
+
+:host {
+  overflow: scroll;
+}
+
+
+BODY {
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /*font-family: var(--main-font);*/
+  font-family: var(--page-font);
+  font-size: var(--main-font-size);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  border: solid 0px transparent;
+  margin: 0px;
+  padding: 0px;
+
+  min-height: 100vh;
+  background: var(--color-level-1);
+}
+
+
+.base-text-style {
+  color: var(--color-anti-level-1);
+  font-size: var(--main-font-size);
+  font-family: var(--page-font);
+}
+
+
+
