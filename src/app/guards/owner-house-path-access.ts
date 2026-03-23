@@ -12,7 +12,7 @@ export interface LoggedUser {
 }
 
 export const ownerPathAccessGuard: CanActivateFn = (route, state): boolean | UrlTree => {
-  const authService = inject(Auth);
+  const authService = inject<AuthService>(AuthService);
   const router = inject(Router);
 
   const user = authService.getLoggedUser();

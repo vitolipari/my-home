@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth';
 
 export const guestGuard: CanActivateFn = async () => {
-  const authService = inject(AuthService);
+  const authService = inject<AuthService>(AuthService);
   const router = inject(Router);
 
   const user = await authService.ensureUserLoaded();

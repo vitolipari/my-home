@@ -27,7 +27,7 @@ import { AuthService } from '../../services/auth';
 })
 export class SignInPage {
   private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject<AuthService>(AuthService);
   private readonly router = inject(Router);
 
   readonly loading = signal(false);
@@ -39,21 +39,21 @@ export class SignInPage {
   });
 
   async submit(): Promise<void> {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    this.loading.set(true);
-    this.errorMessage.set('');
-
-    try {
-      await this.authService.login(this.form.getRawValue());
-      await this.router.navigate(['/startup']);
-    } catch (error) {
-      this.errorMessage.set('Login non riuscito o server non raggiungibile.');
-    } finally {
-      this.loading.set(false);
-    }
+  if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    return;
   }
+
+  this.loading.set(true);
+  this.errorMessage.set('');
+
+  try {
+    await this.authService.login(this.form.getRawValue());
+    await this.router.navigate(['/startup']);
+  } catch {
+    this.errorMessage.set('Login non riuscito o server non raggiungibile.');
+  } finally {
+    this.loading.set(false);
+  }
+}
 }

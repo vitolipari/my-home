@@ -9,7 +9,7 @@ import {AuthService} from '../../services/auth';
 })
 export class TempLinkPage {
   private readonly route = inject(ActivatedRoute);
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject<AuthService>(AuthService);
   private readonly router = inject(Router);
 
   constructor() {

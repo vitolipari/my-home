@@ -12,7 +12,7 @@ import {AuthService} from '../../services/auth';
   `
 })
 export class StartupPage {
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject<AuthService>(AuthService);
 
   logout(): void {
     this.authService.logout();

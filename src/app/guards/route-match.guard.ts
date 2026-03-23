@@ -8,7 +8,7 @@ export const routeMatchGuard: CanMatchFn = async (
   route: Route,
   segments: UrlSegment[]
 ): Promise<boolean | UrlTree> => {
-  const authService = inject(AuthService);
+  const authService = inject<AuthService>(AuthService);
   const accessControlService = inject(AccessControlService);
   const router = inject(Router);
 

@@ -4,10 +4,9 @@ import {SwUpdateService} from './services/sw-update';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
   standalone: true,
-  styleUrl: './app.css'
+  imports: [RouterOutlet],
+  template: `<router-outlet />`
 })
 export class App {
   protected readonly title = signal('my-home');

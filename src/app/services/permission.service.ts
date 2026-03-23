@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth';
   providedIn: 'root'
 })
 export class PermissionService {
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject<AuthService>(AuthService);
 
   hasRole(role: string): boolean {
     const user = this.authService.getLoggedUser();

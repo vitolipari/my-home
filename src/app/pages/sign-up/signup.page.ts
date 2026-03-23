@@ -28,7 +28,7 @@ import {AuthService} from '../../services/auth';
 })
 export class SignUpPage {
   private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject<AuthService>(AuthService);
   private readonly router = inject(Router);
 
   readonly loading = signal(false);
@@ -42,32 +42,32 @@ export class SignUpPage {
   });
 
   async submit(): Promise<void> {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    const value = this.form.getRawValue();
-
-    if (value.password !== value.confirmPassword) {
-      this.message.set('Le password non coincidono.');
-      return;
-    }
-
-    this.loading.set(true);
-    this.message.set('');
-
-    try {
-      await this.authService.signUp(value);
-
-      await this.router.navigate(['/access/confirm'], {
-        queryParams: { email: value.email }
-      });
-
-    } catch {
-      this.message.set('Registrazione non riuscita.');
-    } finally {
-      this.loading.set(false);
-    }
+  if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    return;
   }
+
+  const value = this.form.getRawValue();
+
+  if (value.password !== value.confirmPassword) {
+    this.message.set('Le password non coincidono.');
+    return;
+  }
+
+  this.loading.set(true);
+  this.message.set('');
+
+  try {
+    await this.authService.signUp(value);
+
+    await this.router.navigate(['/access/confirm'], {
+      queryParams: { email: value.email }
+    });
+
+  } catch {
+    this.message.set('Registrazione non riuscita.');
+  } finally {
+    this.loading.set(false);
+  }
+}
 }

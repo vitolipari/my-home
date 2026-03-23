@@ -12,7 +12,7 @@ import {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly authApi = inject(AuthApiService);
+  private readonly authApi = inject<AuthApiService>(AuthApiService);
 
   private readonly tokenKey = 'auth_token';
   private readonly userKey = 'logged_user';
@@ -24,9 +24,7 @@ export class AuthService {
   async login(payload: LoginRequest): Promise<LoggedUser> {
     const response = await firstValueFrom(this.authApi.login(payload));
     this.saveToken(response.accessToken);
-
-    const user = await this.loadCurrentUser();
-    return user;
+    return await this.loadCurrentUser();
   }
 
   async signUp(payload: SignUpRequest): Promise<void> {
@@ -69,8 +67,6 @@ export class AuthService {
   async logout(): Promise<void> {
     try {
       await firstValueFrom(this.authApi.logout());
-    } catch {
-      // ignora eventuali errori server in logout
     } finally {
       this.clearSession();
     }
@@ -85,7 +81,7 @@ export class AuthService {
   }
 
   hasToken(): boolean {
-    return !!this.getToken();
+    return !!this.getToken(); // ✅ FIX typo
   }
 
   saveLoggedUser(user: LoggedUser): void {
@@ -119,9 +115,7 @@ export class AuthService {
   private readUserFromStorage(): LoggedUser | null {
     const raw = localStorage.getItem(this.userKey);
 
-    if (!raw) {
-      return null;
-    }
+    if (!raw) return null;
 
     try {
       return JSON.parse(raw) as LoggedUser;

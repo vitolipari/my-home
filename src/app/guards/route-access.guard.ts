@@ -14,7 +14,7 @@ export const routeAccessGuard: CanActivateFn = async (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ): Promise<boolean | UrlTree> => {
-  const authService = inject(AuthService);
+  const authService = inject<AuthService>(AuthService);
   const permissionService = inject(PermissionService);
   const router = inject(Router);
 

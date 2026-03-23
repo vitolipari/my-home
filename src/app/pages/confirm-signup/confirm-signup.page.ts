@@ -25,7 +25,7 @@ import {Auth} from '../../services/auth';
 })
 export class ConfirmPage {
   private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(Auth);
+  private readonly authService = inject<AuthService>(AuthService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
