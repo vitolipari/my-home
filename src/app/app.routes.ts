@@ -1,23 +1,15 @@
 import { Routes } from '@angular/router';
 import { routeAccessGuard } from './guards/route-access.guard';
-import { guestGuard } from './guards/guest.guard';
-import {SignInPage} from './pages/sign-in/signin.page';
 
 export const routes: Routes = [
-  {
-    path: 'access/sign-in',
-    canActivate: [guestGuard],
-    loadComponent: () =>
-      import('./pages/sign-in/signin.page').then(m => m.SignInPage)
-  },
   {
     path: 'dashboard',
     canActivate: [routeAccessGuard],
     data: {
       accessControl: {
+        rolesAny: ['USER', 'EDITOR', 'MANAGER', 'ADMIN'],
         requireEnabled: true,
-        requireConfirmedEmail: true,
-        requiredRoles: ['USER', 'MANAGER', 'ADMIN']
+        requireConfirmedEmail: true
       }
     },
     loadComponent: () =>
@@ -28,12 +20,32 @@ export const routes: Routes = [
     canActivate: [routeAccessGuard],
     data: {
       accessControl: {
+        rolesAny: ['ADMIN'],
         requireEnabled: true,
         requireConfirmedEmail: true,
-        requiredRoles: ['ADMIN']
+        allowOffline: false
       }
     },
     loadComponent: () =>
       import('./pages/admin/admin.page').then(m => m.AdminPage)
+  },
+
+
+
+  {
+    path: 'profile/:id',
+    canActivate: [routeAccessGuard],
+    data: {
+      accessControl: {
+        customCheckKey: 'ONLY_OWN_PROFILE'
+      }
+    },
+    loadComponent: () =>
+      import('./pages/profile/profile.page').then(m => m.ProfilePage)
+  },
+
+  {
+    path: '**',
+    redirectTo: 'dashboard'
   }
 ];

@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
-import { Auth } from '../services/auth';
+import { AuthService } from '../services/auth';
 
 export interface LoggedUser {
   id: string;

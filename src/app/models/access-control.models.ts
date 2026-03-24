@@ -1,5 +1,3 @@
-import { LoggedUser } from './auth.models';
-
 export interface RedirectConfig {
   notLogged?: string;
   forbidden?: string;
@@ -11,19 +9,30 @@ export interface RedirectConfig {
 }
 
 export interface AccessControlData {
+  // RUOLI
+  rolesAny?: string[];
+  rolesAll?: string[];
 
+  // PERMESSI
+  permissionsAny?: string[];
+  permissionsAll?: string[];
 
+  // STATO UTENTE
   requireEnabled?: boolean;
   requireConfirmedEmail?: boolean;
   requireCompletedProfile?: boolean;
   requireActiveSubscription?: boolean;
 
+  // FEATURE FLAGS
   requiredFeatureFlags?: string[];
 
+  // OFFLINE
   allowOffline?: boolean;
 
+  // CUSTOM CHECK
   customCheckKey?: string;
 
+  // REDIRECT
   redirectTo?: RedirectConfig;
 }
 
@@ -40,6 +49,3 @@ export interface AccessEvaluationResult {
   allowed: boolean;
   reason?: AccessFailureReason;
 }
-
-export type CustomAccessCheck = (user: LoggedUser, url: string) => boolean | Promise<boolean>;
-

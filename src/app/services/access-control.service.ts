@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import {
   AccessControlData,
-  AccessEvaluationResult,
-  CustomAccessCheck
+  AccessEvaluationResult
 } from '../models/access-control.models';
 import { LoggedUser } from '../models/auth.models';
+
+type CustomCheck = (user: LoggedUser, url: string) => boolean | Promise<boolean>;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccessControlService {
-  private readonly customChecks: Record<string, CustomAccessCheck> = {
+
+  private readonly customChecks: Record<string, CustomCheck> = {
     ONLY_OWN_PROFILE: (user, url) => {
-      const urlParts = url.split('/');
-      const targetUserId = urlParts[urlParts.length - 1];
-      return user.id === targetUserId || user.roles.includes('ADMIN');
+      const id = url.split('/').pop();
+      return user.id === id || user.roles?.includes('ADMIN');
     },
 
     ADMIN_OR_MANAGER: (user) => {
-      return user.roles.includes('ADMIN') || user.roles.includes('MANAGER');
+      return user.roles?.includes('ADMIN') || user.roles?.includes('MANAGER');
     }
   };
 
@@ -38,6 +39,12 @@ export class AccessControlService {
       return { allowed: true };
     }
 
+    // SAFE FALLBACKS
+    const roles = user.roles ?? [];
+    const permissions = user.permissions ?? [];
+    const flags = user.featureFlags ?? [];
+
+    // OFFLINE
     if (config.allowOffline === false && !navigator.onLine) {
       return {
         allowed: false,
@@ -45,6 +52,7 @@ export class AccessControlService {
       };
     }
 
+    // STATO UTENTE
     if (config.requireEnabled && !user.enabled) {
       return {
         allowed: false,
@@ -73,113 +81,72 @@ export class AccessControlService {
       };
     }
 
+    // RUOLI ANY
     if (config.rolesAny?.length) {
-      const hasAnyRole = config.rolesAny.some(role => user.roles.includes(role));
-      if (!hasAnyRole) {
-        return {
-          allowed: false,
-          reason: 'FORBIDDEN'
-        };
-      }
+      const ok = config.rolesAny.some(r => roles.includes(r));
+      if (!ok) return { allowed: false, reason: 'FORBIDDEN' };
     }
 
+    // RUOLI ALL
     if (config.rolesAll?.length) {
-      const hasAllRoles = config.rolesAll.every(role => user.roles.includes(role));
-      if (!hasAllRoles) {
-        return {
-          allowed: false,
-          reason: 'FORBIDDEN'
-        };
-      }
+      const ok = config.rolesAll.every(r => roles.includes(r));
+      if (!ok) return { allowed: false, reason: 'FORBIDDEN' };
     }
 
+    // PERMESSI ANY
     if (config.permissionsAny?.length) {
-      const hasAnyPermission = config.permissionsAny.some(permission =>
-        user.permissions.includes(permission)
-      );
-
-      if (!hasAnyPermission) {
-        return {
-          allowed: false,
-          reason: 'FORBIDDEN'
-        };
-      }
+      const ok = config.permissionsAny.some(p => permissions.includes(p));
+      if (!ok) return { allowed: false, reason: 'FORBIDDEN' };
     }
 
+    // PERMESSI ALL
     if (config.permissionsAll?.length) {
-      const hasAllPermissions = config.permissionsAll.every(permission =>
-        user.permissions.includes(permission)
-      );
-
-      if (!hasAllPermissions) {
-        return {
-          allowed: false,
-          reason: 'FORBIDDEN'
-        };
-      }
+      const ok = config.permissionsAll.every(p => permissions.includes(p));
+      if (!ok) return { allowed: false, reason: 'FORBIDDEN' };
     }
 
+    // FEATURE FLAGS
     if (config.requiredFeatureFlags?.length) {
-      const hasAllFlags = config.requiredFeatureFlags.every(flag =>
-        user.featureFlags.includes(flag)
-      );
-
-      if (!hasAllFlags) {
-        return {
-          allowed: false,
-          reason: 'FORBIDDEN'
-        };
-      }
+      const ok = config.requiredFeatureFlags.every(f => flags.includes(f));
+      if (!ok) return { allowed: false, reason: 'FORBIDDEN' };
     }
 
+    // CUSTOM
     if (config.customCheckKey) {
-      const customCheck = this.customChecks[config.customCheckKey];
+      const fn = this.customChecks[config.customCheckKey];
+      if (!fn) return { allowed: false, reason: 'FORBIDDEN' };
 
-      if (!customCheck) {
-        return {
-          allowed: false,
-          reason: 'FORBIDDEN'
-        };
-      }
-
-      const customAllowed = await customCheck(user, url);
-
-      if (!customAllowed) {
-        return {
-          allowed: false,
-          reason: 'FORBIDDEN'
-        };
-      }
+      const result = await fn(user, url);
+      if (!result) return { allowed: false, reason: 'FORBIDDEN' };
     }
 
     return { allowed: true };
   }
 
   resolveRedirect(reason: string, config?: AccessControlData): string {
-    const redirect = config?.redirectTo;
+    const r = config?.redirectTo;
 
     switch (reason) {
       case 'NOT_LOGGED':
-        return redirect?.notLogged ?? '/access/sign-in';
+        return r?.notLogged ?? '/access/sign-in';
 
       case 'DISABLED':
-        return redirect?.disabled ?? '/account-disabled';
+        return r?.disabled ?? '/account-disabled';
 
       case 'UNCONFIRMED_EMAIL':
-        return redirect?.unconfirmedEmail ?? '/access/confirm';
+        return r?.unconfirmedEmail ?? '/access/confirm';
 
       case 'INCOMPLETE_PROFILE':
-        return redirect?.incompleteProfile ?? '/profile/complete';
+        return r?.incompleteProfile ?? '/profile/complete';
 
       case 'NO_SUBSCRIPTION':
-        return redirect?.noSubscription ?? '/subscription/upgrade';
+        return r?.noSubscription ?? '/subscription/upgrade';
 
       case 'OFFLINE_BLOCKED':
-        return redirect?.offlineBlocked ?? '/offline-blocked';
+        return r?.offlineBlocked ?? '/home-empty';
 
-      case 'FORBIDDEN':
       default:
-        return redirect?.forbidden ?? '/unauthorized';
+        return r?.forbidden ?? '/unauthorized';
     }
   }
 }

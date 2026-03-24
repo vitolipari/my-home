@@ -2,10 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import {Auth} from '../../services/auth';
+import { firstValueFrom } from 'rxjs';
+import { AuthService } from '../../services/auth';
+import { ConfirmRequest } from '../../models/auth.models';
 
 @Component({
-  selector: 'app-confirm',
+  selector: 'app-confirm-signup',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   template: `
@@ -23,9 +25,9 @@ import {Auth} from '../../services/auth';
     <a routerLink="/access/sign-in">Torna al login</a>
   `
 })
-export class ConfirmPage {
+export class ConfirmSignupPage {
   private readonly fb = inject(FormBuilder);
-  private readonly authService = inject<AuthService>(AuthService);
+  private readonly authService = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
@@ -37,7 +39,7 @@ export class ConfirmPage {
     code: ['', Validators.required]
   });
 
-  submit(): void {
+  async submit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -46,17 +48,16 @@ export class ConfirmPage {
     this.loading.set(true);
     this.message.set('');
 
-    this.authService.confirm(this.form.getRawValue()).subscribe({
-      next: () => {
-        this.loading.set(false);
-        void this.router.navigate(['/access/sign-in'], {
-          queryParams: { confirmed: 'true' }
-        });
-      },
-      error: () => {
-        this.loading.set(false);
-        this.message.set('Conferma non riuscita.');
-      }
-    });
+    try {
+      await this.authService.confirm(this.form.getRawValue());
+
+      await this.router.navigate(['/access/sign-in'], {
+        queryParams: { confirmed: 'true' }
+      });
+    } catch {
+      this.message.set('Conferma non riuscita.');
+    } finally {
+      this.loading.set(false);
+    }
   }
 }
