@@ -35,17 +35,17 @@ export class PermissionService {
     return permissions.some(permission => user.permissions.includes(permission));
   }
 
-  hasFeatureFlag(flag: string): boolean {
-    const user = this.authService.getLoggedUser();
-    return !!user?.featureFlags?.includes(flag);
-  }
+  // hasFeatureFlag(flag: string): boolean {
+  //   const user = this.authService.getLoggedUser();
+  //   return !!user?.featureFlags?.includes(flag);
+  // }
 
-  hasAnyFeatureFlag(flags: string[]): boolean {
-    const user = this.authService.getLoggedUser();
-    if (!user) {
-      return false;
-    }
-
-    return flags.some(flag => user.featureFlags.includes(flag));
-  }
+  // hasAnyFeatureFlag(flags: string[]): boolean {
+  //   const user = this.authService.getLoggedUser();
+  //   if (!user) {
+  //     return false;
+  //   }
+  //
+  //   return flags.some(flag => user.featureFlags.includes(flag));
+  // }
 }

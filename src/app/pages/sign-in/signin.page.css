@@ -1,0 +1,29 @@
+.field {
+    margin-bottom: 2rem;
+}
+
+
+FORM > p-button {
+    margin: 0rem auto;
+    margin-bottom: 2rem;
+}
+
+A,
+A:visited,
+A:hover,
+A:active {
+    text-decoration: none;
+    color: var(--sky-color);
+    cursor: pointer;
+    text-align: right;
+    padding-right: 0.5rem;
+}
+
+A > DIV {
+    color: var(--sky-color);
+}
+
+.error-message {
+    color: var(--medium-red-color) !important;
+    font-weight: 500;
+}

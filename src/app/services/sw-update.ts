@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import {Injectable, inject, NgZone} from '@angular/core';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs/operators';
 
@@ -7,6 +7,7 @@ import { filter } from 'rxjs/operators';
 })
 export class SwUpdateService {
   private readonly swUpdate = inject(SwUpdate);
+  private readonly ngZone = inject(NgZone);
 
   init(): void {
     if (!this.swUpdate.isEnabled) {
@@ -27,10 +28,16 @@ export class SwUpdateService {
         }
       });
 
-    // controllo periodico aggiornamenti
-    setInterval(() => {
-      this.swUpdate.checkForUpdate().catch(console.error);
-    }, 5 * 60 * 1000);
+    this.ngZone.runOutsideAngular(() => {
+      setTimeout(() => {
+        this.swUpdate.checkForUpdate().catch(console.error);
+
+        setInterval(() => {
+          this.swUpdate.checkForUpdate().catch(console.error);
+        }, 60 * 60 * 1000);
+
+      }, 10_000);
+    });
   }
 }
 

@@ -1,0 +1,31 @@
+.field > SMALL {
+    color: var(--color-text-0);
+}
+
+#signup-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-self: center;
+}
+
+#profile-image {
+    grid-area: 1 / 1;
+    justify-self: center;
+    align-self: center;
+    /*margin-right: 10px;*/
+    pointer-events: auto;
+    cursor: pointer;
+
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#profile-image-placeholder {
+    grid-area: 1 / 1;
+    width: 100%;
+    /*padding-right: 50px;*/
+    box-sizing: border-box;
+}

@@ -3,7 +3,9 @@ only screen
 and (min-width: 1024px)
 {
     #tablet,
-    #mobile
+    #mobile,
+    .device.tablet,
+    .device.mobile
     {
         display: none;
     }

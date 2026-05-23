@@ -1,15 +1,16 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { AuthService } from '../services/auth';
+import {LoggedUser} from '../models/auth.models';
 
-export interface LoggedUser {
-  id: string;
-  email: string;
-  roles?: string[];
-  permissions?: string[];
-  enabled?: boolean;
-  profileCompleted?: boolean;
-}
+// export interface LoggedUser {
+//   id: string;
+//   email: string;
+//   roles?: string[];
+//   permissions?: string[];
+//   enabled?: boolean;
+//   profileCompleted?: boolean;
+// }
 
 export const ownerPathAccessGuard: CanActivateFn = (route, state): boolean | UrlTree => {
   const authService = inject<AuthService>(AuthService);
@@ -46,10 +47,10 @@ function canUserAccessPath(user: LoggedUser, targetUrl: string): boolean {
       paths: ['/admin', '/admin/users', '/admin/settings'],
       predicate: (currentUser) => currentUser.roles?.includes('ADMIN') === true
     },
-    {
-      paths: ['/profile/complete'],
-      predicate: (currentUser) => currentUser.profileCompleted !== true
-    },
+    // {
+    //   paths: ['/profile/complete'],
+    //   predicate: (currentUser) => currentUser.profileCompleted !== true
+    // },
     {
       paths: ['/premium', '/reports'],
       predicate: (currentUser) => currentUser.permissions?.includes('CAN_ACCESS_REPORTS') === true

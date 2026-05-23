@@ -1,104 +1,58 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
-import { AuthApiService } from '../../services/auth-api';
-import { LoggedUser, LoginRequest } from '../../models/auth.models';
+import {Component, inject, signal} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {firstValueFrom} from 'rxjs';
+import {AuthService} from '../../services/auth';
+import {ConfirmRequest} from '../../models/auth.models';
 
-@Injectable({
-  providedIn: 'root'
+@Component({
+    selector: 'app-confirm-signup',
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, RouterLink],
+    template: './forgot-password.page.html'
 })
-export class AuthService {
-  private readonly authApi = inject(AuthApiService);
+export class ForgotPasswordPage {
 
-  private readonly tokenKey = 'auth_token';
-  private readonly userKey = 'logged_user';
+    private readonly fb = inject(FormBuilder);
+    private readonly authService = inject(AuthService);
 
-  readonly currentUser = signal<LoggedUser | null>(this.readUserFromStorage());
-  readonly isAuthenticated = computed(() => !!this.currentUser() || this.hasToken());
+    readonly loading = signal(false);
+    readonly message = signal('');
+    readonly errorMessage = signal('');
 
-  async login(payload: LoginRequest): Promise<LoggedUser> {
-    const response = await firstValueFrom(this.authApi.login(payload));
-    this.saveToken(response.accessToken);
+    readonly form = this.fb.nonNullable.group({
+        email: ['', [Validators.required, Validators.email]]
+    });
 
-    const user = await this.loadCurrentUser();
-    return user;
-  }
+    async submit(): Promise<void> {
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            return;
+        }
 
-  async loadCurrentUser(): Promise<LoggedUser> {
-    const user = await firstValueFrom(this.authApi.me());
-    this.saveLoggedUser(user);
-    return user;
-  }
+        this.loading.set(true);
+        this.message.set('');
+        this.errorMessage.set('');
 
-  async ensureUserLoaded(): Promise<LoggedUser | null> {
-    const current = this.currentUser();
-    if (current) {
-      return current;
+        try {
+            const {email} = this.form.getRawValue();
+
+            await this.authService.forgotPassword(email);
+
+            this.message.set(
+                'Se l’email è registrata, riceverai le istruzioni per reimpostare la password.'
+            );
+
+            this.form.reset();
+        } catch {
+            this.errorMessage.set(
+                'Non è stato possibile inviare la richiesta di recupero password.'
+            );
+        } finally {
+            this.loading.set(false);
+        }
     }
 
-    if (!this.hasToken()) {
-      return null;
-    }
 
-    try {
-      return await this.loadCurrentUser();
-    } catch {
-      this.clearSession();
-      return null;
-    }
-  }
-
-  async forgotPassword(email: string): Promise<void> {
-    await firstValueFrom(this.authApi.forgotPassword(email));
-  }
-
-  async logout(): Promise<void> {
-    try {
-      await firstValueFrom(this.authApi.logout());
-    } catch {
-      // ignora eventuali errori server in logout
-    } finally {
-      this.clearSession();
-    }
-  }
-
-  saveToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
-  }
-
-  hasToken(): boolean {
-    return !!this.getToken();
-  }
-
-  saveLoggedUser(user: LoggedUser): void {
-    localStorage.setItem(this.userKey, JSON.stringify(user));
-    this.currentUser.set(user);
-  }
-
-  getLoggedUser(): LoggedUser | null {
-    return this.currentUser();
-  }
-
-  clearSession(): void {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.userKey);
-    this.currentUser.set(null);
-  }
-
-  private readUserFromStorage(): LoggedUser | null {
-    const raw = localStorage.getItem(this.userKey);
-
-    if (!raw) {
-      return null;
-    }
-
-    try {
-      return JSON.parse(raw) as LoggedUser;
-    } catch {
-      return null;
-    }
-  }
 }

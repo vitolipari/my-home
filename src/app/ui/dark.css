@@ -7,32 +7,23 @@
     /*  Header  */
 
     /* Colori */
-    --color-level-1: #121212;
-    --color-level-2: #212121;
-    --color-level-3: #414141;
+    --color-background-1: rgb(27, 27, 27);
+    --color-background-2: rgb(33, 33, 33);
+    --color-background-3: rgb(40, 40, 40);
 
-    --color-anti-level-1: #aaa;
-    --color-anti-level-2: #888;  /* todo */
-    --color-anti-level-3: #666;  /* todo */
-    --color-anti-level-4: #555;  /* todo */
-    --color-anti-level-5: #444;  /* todo */
 
-    --color-accent-level-1: #252628;  /* todo */
-    --color-accent-level-2: #252628;  /* todo */
-    --color-accent-level-3: #252628;  /* todo */
+    --color-ambient-1: rgb(50, 50, 50);
+    --color-ambient-2: rgb(82, 82, 82);
 
-    --color-disabled-1: #454;  /* todo */
-    --color-disabled-2: #575;  /* todo */
-    --color-disabled-3: #8a8;  /* todo */
+    --color-text-1: rgb(101, 101, 101);
+    --color-text-2: rgb(128, 128, 128);
+    --color-text-0: rgb(80, 80, 80);
 
-    --color-evident-1: #080;  /* todo */
-    --color-evident-2: #0aff97;  /* todo */
 
-    --color-inner-glow: #385;  /* todo */
-    --color-outer-glow: #0f0;  /* todo */
+    --color-evident-1: #138;  /* todo */
+    --color-evident-2: #18f;  /* todo */
 
-    --color-red-inner-glow: #f88a;  /* todo */
-    --color-red-outer-glow: #f13;  /* todo */
+
 
     --light-color: #fff;  /* todo */
     --dark-color: #000;  /* todo */

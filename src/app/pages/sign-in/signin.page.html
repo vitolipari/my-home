@@ -1,26 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<div class="page columns splash-page">
+    <div class="columns icon-title">
+        <svg class="svg-icon">
+            <use href="#user_filled-ok"></use>
+<!--            <use href="#timer-1"></use>-->
+<!--            <use href="#orologio-1-1"></use>-->
+        </svg>
+
+        <div>Sign In</div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="columns">
+
+        <div class="flex flex-col gap-2 columns field">
+            <label for="email">Email</label>
+            <input
+                pInputText
+                id="email"
+                aria-describedby="username-help"
+                formControlName="email"
+                placeholder="user@mail.com"
+            />
+            @if (!errors.email) {
+                <small id="email-help"></small>
+            }
+            @else {
+                <small id="email-error" class="error-message">{{ errors.email }}</small>
+            }
+            <a routerLink="/access/sign-up">
+                <div>
+                    SignUp
+                </div>
+            </a>
+        </div>
+
+        <div class="flex flex-col gap-2 columns field">
+            <label for="password">Password</label>
+            <div class="input-icon">
+                <input
+                    pInputText
+                    id="password"
+                    aria-describedby="password-help"
+                    formControlName="password"
+                    placeholder="abc@DEF_ghi#99985-14"
+                    type="{{ !visibility.password ? 'password' : 'text' }}"
+                />
+                <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('password')">
+                    @if (!!visibility.password) {
+                        <use href="#occhio-aperto"></use>
+                    } @else {
+                        <use href="#occhio-sbarrato"></use>
+                    }
+                </svg>
+            </div>
+            @if (!errors.password) {
+                <small id="password-help">
+                    <a routerLink="/access/forgot-password">
+                        <div>
+                            Password dimenticata
+                        </div>
+                    </a>
+                </small>
+            }
+            @else {
+                <small id="password-error" class="error-message">{{ errors.password }}</small>
+            }
+        </div>
 
 
-<h1>Sign In</h1>
+        <div id="signup-button">
+            @if (!!inWaiting()) {
+                <svg class="svg-icon inside-button">
+                    <use href="#orologio-1-1"></use>
+                </svg>
+            }
+            <p-button
+                label="{{ !!inWaiting() ? 'in attesa' : 'signin' }}"
+                type="submit"
+                [disabled]="!!inWaiting()"
+                [rounded]="true"
+                [size]="'small'"
+                [style]="{padding: '0px 20px 0px '+ ( !inWaiting() ? '20px' : '32px' )}"
+            ></p-button>
+        </div>
 
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <input type="email" formControlName="email" placeholder="Email" />
-  <input type="password" formControlName="password" placeholder="Password" />
+    </form>
 
-  <button type="submit" [disabled]="loading()">Accedi</button>
-</form>
+    <p *ngIf="errorMessage()" class="error-message">{{ errorMessage() }}</p>
 
-<p *ngIf="errorMessage()">{{ errorMessage() }}</p>
 
-<a routerLink="/access/forgot-password">Password dimenticata</a>
-<br />
-<a routerLink="/access/sign-up">Registrati</a>
+</div>
 
-</body>
-</html>

@@ -49,7 +49,7 @@ export class ConfirmSignupPage {
     this.message.set('');
 
     try {
-      await this.authService.confirm(this.form.getRawValue());
+      // await this.authService.confirm(this.form.getRawValue());
 
       await this.router.navigate(['/access/sign-in'], {
         queryParams: { confirmed: 'true' }

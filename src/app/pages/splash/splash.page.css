@@ -1,0 +1,30 @@
+:host {
+
+}
+
+.splash-page {
+    align-content: center;
+    justify-content: flex-start;
+    margin: auto 0px;
+}
+
+.splash-page > DIV {
+    display: flex;
+    align-self: center;
+}
+
+.splash-page > DIV > IMG {
+    width: 100%;
+}
+
+#app-title {
+    margin: 4rem;
+    font-family: var(--reading-font);
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+#app-logo {}
+
+#app-version {}
+

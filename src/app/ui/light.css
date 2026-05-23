@@ -6,37 +6,27 @@
     /*  Header  */
 
     /* Colori */
-    --color-level-1: #f0f0f0;
-    --color-level-2: #eee;
-    --color-level-3: #e0e0e0;
-    --color-level-3: #ddd;
+    --color-background-1: rgb(244, 244, 244);
+    --color-background-2: rgb(220, 220, 220); /* da cambiare */
+    --color-background-3: rgb(230, 230, 230); /* da cambiare */
 
-    --color-anti-level-1: #252628;
-    --color-anti-level-2: #444;
-    --color-anti-level-3: #888;
-    --color-anti-level-4: #aaa;
-    --color-anti-level-5: #ddd;
+    --color-ambient-1: rgb(50, 50, 50);
+    --color-ambient-2: rgb(82, 82, 82);
 
-    --color-accent-level-1: #080;
-    --color-accent-level-2: #252628;
-    --color-accent-level-3: #252628;
+    --color-text-1: rgb(99, 99, 99);
+    --color-text-2: rgb(64, 64, 64);
+    --color-text-0: rgb(120, 120, 120);
 
-    --color-disabled-1: #454;
-    --color-disabled-2: #575;
-    --color-disabled-3: #8a8;
+    --color-evident-1: #080;  /* todo */
+    --color-evident-2: #0aff97;  /* todo */
 
-    --color-evident-1: #080;
-    --color-evident-2: #38f;
 
-    --color-inner-glow: #385;
-    --color-outer-glow: #0f0;
+    --light-color: #fff;  /* todo */
+    --dark-color: #000;  /* todo */
+    --theme-color: #fff;  /* todo */
 
-    --color-red-inner-glow: #f88a;
-    --color-red-outer-glow: #f13;
 
-    --light-color: #fff;
-    --dark-color: #000;
-    --theme-color: #fff;
+    --different-blur-for-theme: 2px;  /* todo */
 
     --big-opacity-theme-color: #fffc;
     --middle-opacity-theme-color: #fff7;

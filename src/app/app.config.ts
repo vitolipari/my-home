@@ -5,6 +5,9 @@ import {provideHttpClient, withFetch, withInterceptors} from '@angular/common/ht
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideServiceWorker } from '@angular/service-worker';
 import {authTokenInterceptor} from './interceptor/auth-token.interceptor';
+import {secureConInterceptor} from './modules/secure-con/securecon.interceptor';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
 
 
 export const appConfig: ApplicationConfig = {
@@ -13,8 +16,17 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
       withFetch(),
-      withInterceptors([authTokenInterceptor])
+      withInterceptors([authTokenInterceptor, secureConInterceptor])
     ),
-    provideAnimationsAsync()
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWithDelay:5000'
+    }),
+    provideAnimationsAsync(),
+      providePrimeNG({
+          theme: {
+              preset: Aura
+          }
+      })
   ]
 };

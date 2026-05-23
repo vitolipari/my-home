@@ -1,11 +1,10 @@
-@import "primeicons/primeicons.css";
+/*@import "primeicons/primeicons.css";*/
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600');
 @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-
 
 @import "app/ui/mobile.css";
 @import "app/ui/tablet.css";
@@ -14,96 +13,266 @@
 @import "app/ui/light.css";
 @import "app/ui/dark.css";
 
-@import "primeicons/primeicons.css";
+/*@import "primeicons/primeicons.css";*/
 
 :root {
 
-  touch-action: none;
+    touch-action: none;
 
 
-  /* Font */
-  --mono-font: 'Ubuntu', -apple-system, 'Helvetica Neue', 'Roboto', BlinkMacSystemFont, 'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', sans-serif;
-  --page-font: 'Prompt', 'Montserrat', 'Calisto MT', 'Calisto', 'Trebuchet MS', sans-serif;
-  --main-font: 'Segoe UI', 'Candara', 'Trebuchet MS', 'Varela Round', Verdana, "Open Sans Regular", "Arial Unicode MS Regular", sans-serif;
-  --reading-font: Georgia, 'Lora', 'Libre Baskerville', 'Adobe Caslon';
-  --orbitron-font: Orbitron, sans-serif;
+    /* Font */
+    --page-font: 'Prompt', 'Montserrat', 'Calisto MT', 'Calisto', 'Trebuchet MS', sans-serif;
+    --mono-font: 'Ubuntu', -apple-system, 'Helvetica Neue', 'Roboto', BlinkMacSystemFont, 'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', sans-serif;
+    --main-font: 'Segoe UI', 'Candara', 'Trebuchet MS', 'Varela Round', Verdana, "Open Sans Regular", "Arial Unicode MS Regular", sans-serif;
+    --reading-font: 'Lora', 'Libre Baskerville', 'Adobe Caslon', Georgia;
+    --orbitron-font: Orbitron, sans-serif;
 
-  /* Dimensioni */
-  --small-font-size: 12px;
-  --main-font-size: 14px;
-  --main-font-section-size: 14px;
-  --main-medium-big-font-size: 16px;
-  --main-big-font-size: 20px;
-  --big-font-size: 24px;
-  --main-huge-font-size: 30px;
-  --main-40-font-size: 40px;
-  --main-giga-font-size: 52px;
+    /* Dimensioni */
+    --small-font-size: 12px;
+    --main-font-size: 14px;
+    --main-font-section-size: 14px;
+    --main-medium-big-font-size: 16px;
+    --main-big-font-size: 20px;
+    --big-font-size: 24px;
+    --main-huge-font-size: 30px;
+    --main-40-font-size: 40px;
+    --main-giga-font-size: 52px;
 
-  --transition-time: 0.4s;
+    --transition-time: 0.4s;
 
-  /*--slash-tile-bg-image: url('/imgs/slashTile_white_05.png');*/
-  /*--slash-tile-bg-image: url('/imgs/slashTile_black_025.png');*/
+    /*--slash-tile-bg-image: url('/imgs/slashTile_white_05.png');*/
+    /*--slash-tile-bg-image: url('/imgs/slashTile_black_025.png');*/
 
-  /* common */
-  --light-sky-color: #61dafb;
-  --lightBlue: #2196f3;
-  --sky-color: #38f;
-  --dark-sky-color: #215ac5;
-  --celestino: #18f2;
-  --darkGreen: #183;
-  --very-light-gray-green: #4fa13e33;
-  --good-green: #1fa;
-  --gray: #c3c3c3;
-  --medium-gray: #888;
-  --full-white: #fff;
+    /* common */
+    --light-sky-color: #61dafb;
+    --lightBlue: #2196f3;
+    --sky-color: #38f;
+    --dark-sky-color: #215ac5;
+    --celestino: #18f2;
+    --darkGreen: #183;
+    --very-light-gray-green: #4fa13e33;
+    --good-green: #1fa;
+    --gray: #c3c3c3;
+    --medium-gray: #888;
+    --full-white: #fff;
+
+    --color-inner-glow: #385; /* todo */
+    --color-outer-glow: #0f0; /* todo */
+
+    --color-red-inner-glow: #f88a; /* todo */
+    --color-red-outer-glow: #f13; /* todo */
 
 
+    --dark-red-color: #d00;
+    --medium-red-color: #f35;
+    --red-opacity: #f353;
+    --soft-blue-gray: #525f77;
 
-  --dark-red-color: #d00;
-  --medium-red-color: #f35;
-  --red-opacity: #f353;
-  --soft-blue-gray: #525f77;
 
+    --header-height: 2rem;
 
-  --header-height: 2rem;
-
-  --max-panel-width: 1024px;
+    --max-panel-width: 1024px;
 
 }
 
 :host {
-  overflow: scroll;
+    overflow: scroll;
 }
 
 
 BODY {
-  overflow-y: auto;
-  overflow-x: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  /*font-family: var(--main-font);*/
-  font-family: var(--page-font);
-  font-size: var(--main-font-size);
+    /*font-family: var(--main-font);*/
+    font-family: var(--page-font);
+    font-size: var(--main-font-size);
+    color: var(--color-text-2);
 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  border: solid 0px transparent;
-  margin: 0px;
-  padding: 0px;
+    border: solid 0px transparent;
+    margin: 0px;
+    padding: 0px;
 
-  min-height: 100vh;
-  background: var(--color-level-1);
+    min-height: 100vh;
+    background: var(--color-background-1);
 }
 
+
+.page {
+    margin: 0px;
+    padding: 2rem;
+    background: var(--color-background-1);
+    min-width: 100vw !important;
+    min-height: 100vh !important;
+}
 
 .base-text-style {
-  color: var(--color-anti-level-1);
-  font-size: var(--main-font-size);
-  font-family: var(--page-font);
+    color: var(--color-text-1);
+    font-size: var(--main-font-size);
+    font-family: var(--page-font);
+}
+
+.columns {
+    display: flex;
+    flex-direction: column;
+}
+
+FOOTER {
+}
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* autofill input */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    /*-webkit-text-fill-color: var(--main-color);*/
+    /*-webkit-box-shadow: 0 0 0 1000px #fff2 inset !important;*/
+}
+
+.svg-icon {
+    fill: var(--color-text-1);
 }
 
 
 
+.image-icon {
+    width: 1.25rem;
+    cursor: pointer;
+}
+
+
+.primeng-custom-icon,
+.primeng-custom-icon:hover,
+::ng-deep.primeng-custom-icon,
+::ng-deep.primeng-custom-icon:hover,
+.primeng-custom-icon > SPAN,
+.primeng-custom-icon > SPAN:hover,
+::ng-deep.primeng-custom-icon > SPAN,
+::ng-deep.primeng-custom-icon > SPAN:hover {
+    width: 1.25rem;
+    cursor: pointer;
+    outline: none !important;
+    border: none !important;
+    color: transparent !important;
+    background: none !important;
+}
+
+
+.icon-title {
+    /*justify-content: flex-start;*/
+    margin: 2rem;
+    text-align: center;
+    justify-content: center;
+}
+
+.icon-title > SVG {
+
+}
+
+.icon-title > DIV {
+    font-size: var(--main-huge-font-size);
+    font-weight: 500;
+    margin: 0px auto;
+    margin-bottom: 1rem;
+}
+
+.panel-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 96%;
+    margin: 1rem auto;
+}
+
+
+.square-block {
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.square-block > IMG {
+    width: 100%;
+    height: 100%;
+}
+
+.square-block > DIV {
+
+}
+
+.p-inputtext {
+    border-color: var(--color-background-2) !important;
+    background: var(--color-background-3) !important;
+
+}
+
+.p-inputtext::placeholder {
+    opacity: 0.4; /* importante per Firefox */
+}
+
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    transform-origin: center;
+}
+
+
+.hand {
+    transform-origin: 12px 13px; /* punto di rotazione */
+    animation: spin 1s linear infinite;
+}
+
+
+.inside-button {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    top: 1px;
+    left: 23px;
+    display: inline-block;
+    z-index: 1;
+}
+
+
+.input-icon {
+    display: grid;
+}
+
+.icon-in-input-at-right {
+    grid-area: 1 / 1;
+    justify-self: end;
+    align-self: center;
+    margin-right: 10px;
+    width: 25px;
+    height: 25px;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.input-icon > INPUT.p-inputtext {
+    grid-area: 1 / 1;
+    width: 100%;
+    padding-right: 50px;
+    box-sizing: border-box;
+}

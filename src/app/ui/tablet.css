@@ -4,7 +4,9 @@ and (min-width: 640px)
 and (max-width: 1024px)
 {
     #desktop,
-    #mobile
+    #mobile,
+    .device.desktop,
+    .device.mobile
     {
         display: none;
     }

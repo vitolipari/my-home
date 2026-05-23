@@ -1,6 +1,6 @@
 {
-  "name": "my-home",
-  "short_name": "my-home",
+  "name": "my-house-pwa",
+  "short_name": "my-house-pwa",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
