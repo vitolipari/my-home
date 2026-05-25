@@ -1,10 +1,11 @@
 import {Component, effect, inject, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth';
+import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth';
 import packageJson from '../../../../package.json';
 import {DarkModeService} from '../../services/dark-mode-service';
+import {LoggedUser} from '../../models/auth.models';
 
-const SPLASH_SCREEN_TIME = 3000;
+const SPLASH_SCREEN_TIME = 500;
 
 @Component({
     selector: 'app-splash',
@@ -15,7 +16,7 @@ const SPLASH_SCREEN_TIME = 3000;
 export class SplashPage implements OnInit {
 
     private router = inject(Router);
-    private auth = inject(AuthService);
+    private authService = inject(AuthService);
     protected readonly darkModeService = inject(DarkModeService);
 
     version: string = packageJson.version;
@@ -34,10 +35,18 @@ export class SplashPage implements OnInit {
         const leaveSplashScreen = new Promise<any>((onFinish, onError) => {
             try {
                 setTimeout(() => {
-                    onFinish({});   // TODO caricamenti iniziali
+
+                    this.authService.ensureUserLoaded()
+                        .then((user: LoggedUser) => {
+                            onFinish(user);
+                        })
+                        .catch((e: any) => {
+                            console.log('errore a leaveSplashScreen');
+                            console.log(e);
+                        })
+
                 }, SPLASH_SCREEN_TIME);
-            }
-            catch(e){
+            } catch (e) {
                 onError(e);
             }
         });
@@ -48,7 +57,7 @@ export class SplashPage implements OnInit {
 
                 console.log('fine splash screen');
 
-                if (this.auth.isAuthenticated()) {
+                if (this.authService.isAuthenticated()) {
                     console.log('vado a dashboard');
                     this.router.navigate(['/dashboard']);
                 } else {

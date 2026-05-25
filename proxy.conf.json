@@ -25,5 +25,17 @@
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"
+    },
+    "/health": {
+        "target": "http://localhost:9099",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    },
+    "/me": {
+        "target": "http://localhost:9099",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
     }
 }

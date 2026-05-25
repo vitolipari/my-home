@@ -68,13 +68,13 @@ export class AuthService {
     //     await firstValueFrom(this.authApi.confirm(payload));
     // }
 
-    async forgotPassword(email: string): Promise<void> {
-        await firstValueFrom(this.authApi.forgotPassword(email));
-    }
+    // async forgotPassword(email: string): Promise<void> {
+    //     await firstValueFrom(this.authApi.forgotPassword(email));
+    // }
 
-    loadCurrentUser(): Promise<LoggedUser> {
-        return this.ensureUserLoaded();
-    }
+    // loadCurrentUser(): Promise<LoggedUser> {
+    //     return this.ensureUserLoaded();
+    // }
 
     ensureUserLoaded(): Promise<LoggedUser> {
         // const current = this.currentUser;
@@ -130,11 +130,7 @@ export class AuthService {
     }
 
     async logout(): Promise<void> {
-        try {
-            await firstValueFrom(this.authApi.logout());
-        } finally {
-            this.clearSession();
-        }
+        this.clearSession();
     }
 
     saveToken(token: string): void {
@@ -160,8 +156,6 @@ export class AuthService {
     }
 
     getLoggedUser(): LoggedUser | null {
-
-        // TODO controllo con accessToken
 
         return this.currentUser();
     }

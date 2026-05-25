@@ -18,22 +18,22 @@ export class DashboardPage implements OnInit {
 
     ngOnInit(): void {
 
-        console.log('avvio le chiamate di test in dashboard');
-
-        Promise.all([
-                firstValueFrom(this.http.get<{ profile: LoggedUser; accessToken: string; }>('/test/get-con-response')),
-                firstValueFrom(this.http.get<{ profile: LoggedUser; accessToken: string; }>('/test/get-senza-response')),
-                firstValueFrom(this.http.post<{ profile: LoggedUser; accessToken: string; }>('/test/post-con-response', {id: 15})),
-                firstValueFrom(this.http.post<{ profile: LoggedUser; accessToken: string; }>('/test/post-senza-response', {id: 15}))
-            ])
-            .then((responses: any[]) => {
-                console.log('fine chiamate di test');
-                console.log( responses );
-            })
-            .catch((e: any) => {
-                console.log('errore alle chiamate di test in dashboard');
-                console.log(e);
-            })
+        // console.log('avvio le chiamate di test in dashboard');
+        //
+        // Promise.all([
+        //         firstValueFrom(this.http.get<{ profile: LoggedUser; accessToken: string; }>('/test/get-con-response')),
+        //         firstValueFrom(this.http.get<{ profile: LoggedUser; accessToken: string; }>('/test/get-senza-response')),
+        //         firstValueFrom(this.http.post<{ profile: LoggedUser; accessToken: string; }>('/test/post-con-response', {id: 15})),
+        //         firstValueFrom(this.http.post<{ profile: LoggedUser; accessToken: string; }>('/test/post-senza-response', {id: 15}))
+        //     ])
+        //     .then((responses: any[]) => {
+        //         console.log('fine chiamate di test');
+        //         console.log( responses );
+        //     })
+        //     .catch((e: any) => {
+        //         console.log('errore alle chiamate di test in dashboard');
+        //         console.log(e);
+        //     })
 
 
     }

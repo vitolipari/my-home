@@ -38,7 +38,7 @@ export class ForgotPasswordPage {
         try {
             const {email} = this.form.getRawValue();
 
-            await this.authService.forgotPassword(email);
+            // await this.authService.forgotPassword(email);
 
             this.message.set(
                 'Se l’email è registrata, riceverai le istruzioni per reimpostare la password.'

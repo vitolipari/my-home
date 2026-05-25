@@ -32,11 +32,11 @@ export const routes: Routes = [
             //     loadComponent: () =>
             //         import('./pages/confirm-signup/confirm-signup.page').then(m => m.ConfirmSignupPage)
             // },
-            {
-                path: 'forgot-password',
-                loadComponent: () =>
-                    import('./pages/forgot-password/forgot-password.page').then(m => m.ForgotPasswordPage)
-            }
+            // {
+            //     path: 'forgot-password',
+            //     loadComponent: () =>
+            //         import('./pages/forgot-password/forgot-password.page').then(m => m.ForgotPasswordPage)
+            // }
         ]
     },
 

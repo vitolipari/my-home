@@ -2,12 +2,21 @@
 <app-svg-sprite></app-svg-sprite>
 
 <div>
-    <div class="device tablet desktop">
-        Menu
-    </div>
+    @if ( !!user ) {
+        <app-header></app-header>
+    }
+
     <div>
-        <router-outlet />
+        @if ( !!user ) {
+            <div class="device tablet desktop">
+                Menu
+            </div>
+        }
+        <div>
+            <router-outlet />
+        </div>
     </div>
+
 </div>
 
 
