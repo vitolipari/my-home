@@ -71,15 +71,21 @@ export const routes: Routes = [
     },
 
     {
-        path: 'profile/:id',
+        path: 'profile',
         canActivate: [routeAccessGuard],
         data: {
             accessControl: {
-                customCheckKey: 'ONLY_OWN_PROFILE'
+                customCheckKey: 'ONLY_OWN_PROFILE',
+                permission: 'ACCESS_PROFILE_PAGE'
             }
         },
-        loadComponent: () =>
-            import('./pages/profile/profile.page').then(m => m.ProfilePage)
+        children: [
+            {
+                path: 'page',
+                canActivate: [guestGuard],
+                loadComponent: () => import('./pages/profile/profile.page').then(m => m.ProfilePage),
+            }
+        ]
     },
 
     {

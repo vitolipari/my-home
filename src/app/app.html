@@ -1,13 +1,16 @@
 
 <app-svg-sprite></app-svg-sprite>
 
+
 <div>
-    @if ( !!user ) {
-        <app-header></app-header>
+    @if ( user(); as user ) {
+        <app-header
+            [user]="user"
+        ></app-header>
     }
 
     <div>
-        @if ( !!user ) {
+        @if ( user(); as user ) {
             <div class="device tablet desktop">
                 Menu
             </div>

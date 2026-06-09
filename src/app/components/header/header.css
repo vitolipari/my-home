@@ -1,0 +1,25 @@
+:host {
+    width: 100%;
+    min-width: 100vw;
+    border: solid 0px;
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5rem;
+    max-height: 6vh !important;
+}
+
+:host > DIV {
+    align-content: center;
+}
+
+#header-profile-image,
+#header-profile-image-placeholder
+{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-end;
+    border-radius: 100px;
+}

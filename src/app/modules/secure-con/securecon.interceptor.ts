@@ -10,8 +10,11 @@ export const secureConInterceptor: HttpInterceptorFn = (req, next) => {
 
     const secureCon: SecureCon = inject(SecureCon);
 
-    // const pathname = new URL(req.url, window.location.origin).pathname;
-    const pathname = req.url;
+    function getPathname(url: string): string {
+        return new URL(url, window.location.origin).pathname;
+    }
+
+    const pathname = getPathname(req.url);
 
     if( FREE_PATHS.some((freePath) => (pathname === freePath || pathname.startsWith(freePath + '/'))) ) {
         console.log('SESSION INTERCEPTOR - free path '+ pathname);

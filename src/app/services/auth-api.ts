@@ -30,13 +30,13 @@ export class AuthApiService {
         return this.http.post<void>(`/profile/signup`, payload);
     }
 
-    me( accessToken: string ): Promise<Observable<{ profile: LoggedUser; accessToken: string; }>> {
-        return Promise.resolve(this.http.get<{ profile: LoggedUser; accessToken: string; }>(`/profile/me`))
+    me(): Observable<{ profile: LoggedUser; accessToken: string; }> {
+        return this.http.get<{ profile: LoggedUser; accessToken: string; }>('/profile/me');
     }
 
     // logout(): void {
     //     // return this.http.post<void>(`/profile/logout`, {});
-    //     this.authService.clearSession();
+    //     this.authService.clearLoginData();
     //     return;
     // }
 }

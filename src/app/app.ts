@@ -6,12 +6,13 @@ import {SvgSprite} from './ui/svg-sprite/svg-sprite';
 import {Header} from './components/header/header';
 import {AuthService} from './services/auth';
 import {LoggedUser} from './models/auth.models';
+import {JsonPipe} from '@angular/common';
 
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, SvgSprite, Header],
+    imports: [RouterOutlet, SvgSprite, Header, JsonPipe],
     templateUrl: `./app.html`
 })
 export class App {
@@ -19,17 +20,23 @@ export class App {
     protected readonly title = signal('my-house-pwa');
 
     authService = inject(AuthService);
+    readonly user = this.authService.currentUser;
+    // user = this.authService.currentUser;
 
     private readonly swUpdateService = inject<SwUpdateService>(SwUpdateService);
     darkModeService = inject(DarkModeService);
-    user: LoggedUser | null;
+    // user: LoggedUser | null;
 
     // getComputedStyle(document.body).getPropertyValue("--sky-color");
 
     constructor() {
         this.swUpdateService.init();
-        this.user = this.authService.getLoggedUser();
 
+        console.log('chiamo il getLoggedUser');
+        // this.user = this.authService.currentUser;
+
+        console.log('controllo user');
+        console.log( this.user );
         // this.isDarkTheme = this.darkModeService.readIsDarkTheme();
         // this.darkModeService.setTheme(this.darkModeService.readIsDarkTheme());
         // this.darkModeService.init();

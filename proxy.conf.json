@@ -1,39 +1,39 @@
 {
     "/test-free-path": {
-        "target": "http://localhost:9099",
+        "target": "https://localhost:9099",
         "secure": false,
         "changeOrigin": true
     },
     "/test-path": {
-        "target": "http://localhost:9099",
+        "target": "https://localhost:9099",
         "secure": false,
         "changeOrigin": true
     },
     "/test-body-path": {
-        "target": "http://localhost:9099",
+        "target": "https://localhost:9099",
         "secure": false,
         "changeOrigin": true
     },
     "/profile": {
-        "target": "http://localhost:9099",
+        "target": "https://localhost:9099",
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"
     },
     "/test": {
-        "target": "http://localhost:9099",
+        "target": "https://localhost:9099",
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"
     },
     "/health": {
-        "target": "http://localhost:9099",
+        "target": "https://localhost:9099",
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"
     },
     "/me": {
-        "target": "http://localhost:9099",
+        "target": "https://localhost:9099",
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"

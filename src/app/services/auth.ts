@@ -86,7 +86,6 @@ export class AuthService {
             return Promise.reject('no-token');
         }
 
-
         if (!!this.currentUser()) {
             return Promise.resolve(this.currentUser()!);
         }
@@ -94,28 +93,15 @@ export class AuthService {
 
             console.log('vado a recuperare l\'utente dalla chiamata me in authService');
             return (
-                this.authApi.me('' + this.getToken())
-                    .then((meObservable: Observable<{ profile: LoggedUser; accessToken: string; }>) => firstValueFrom(meObservable))
-                    .then((user: ({ profile: LoggedUser; accessToken: string; })) => {
-
-                        console.log('risposta di chiamata /me');
-                        console.log( user.profile );
-
-                        if( !!user.profile && !!user.profile.id ) {
-                            this.currentUser.set( user.profile );
-                            return this.currentUser()!;
+                firstValueFrom(this.authApi.me())
+                    .then((user) => {
+                        if (user?.profile?.id) {
+                            this.currentUser.set(user.profile);
+                            return user.profile;
                         }
-                        else{
-                            return Promise.reject('no-user');
-                        }
+                        return Promise.reject('no-user');
                     })
-                    .catch((e: any) => {
-                        console.log('errore alla chiamata /me');
-                        console.log(e);
-                        debugger;
-                        return Promise.reject(e);
-                    })
-            )
+                );
 
         }
 
@@ -124,13 +110,13 @@ export class AuthService {
         // try {
         //     return await this.loadCurrentUser();
         // } catch {
-        //     this.clearSession();
+        //     this.clearLoginData();
         //     return null;
         // }
     }
 
     async logout(): Promise<void> {
-        this.clearSession();
+        this.clearLoginData();
     }
 
     saveToken(token: string): void {
@@ -172,7 +158,7 @@ export class AuthService {
     //     sessionStorage.removeItem(this.temporaryLinkKey);
     // }
 
-    clearSession(): void {
+    clearLoginData(): void {
         localStorage.removeItem(this.tokenKey);
         localStorage.removeItem(this.userKey);
         // this.clearTemporaryLinkContext();

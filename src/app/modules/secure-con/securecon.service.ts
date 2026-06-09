@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import x509 from 'js-x509-utils';
 import {arrayBufferToBase64Url, base64UrlToUint8Array, textToUint8Array, uint8ArrayToText} from './securecon.utility';
 import {DER} from 'js-x509-utils/dist/typedef';
+import {ApiUrlService} from '../../services/api-url-service';
 
 
 export type SecureConResponseType = {
@@ -31,6 +32,8 @@ export type SessionDataPackType = {
 })
 export class SecureCon {
 
+    apiUrlService = inject(ApiUrlService);
+    baseUrl: string = '';
 
     session: Partial<SessionDataPackType> = {};
 
@@ -155,8 +158,18 @@ export class SecureCon {
                 // start ---------------------------------------------------------------------------------------------------------------------------------------
                 .then(() => {
                     console.log('HANDSHAKE');
-                    this.session = {};
-                    return true;
+
+                    return (
+                        this.apiUrlService.resolveApiBaseUrl()
+                            .then((baseUrl: string) => {
+                                this.baseUrl = baseUrl;
+                                this.session = {};
+                                return true;
+                            })
+                            .catch((e: any) => Promise.reject(e))
+                    )
+                    ;
+
                 })
 
                 // generate certificate ---------------------------------------------------------------------------------------------------------------------------
@@ -170,7 +183,7 @@ export class SecureCon {
                     publicKey: JsonWebKey
                 }) => (
                     fetch(
-                        'http://localhost:9099/session/handshake',
+                        `${ this.baseUrl }/session/handshake`,
                         {
                             method: 'POST',
                             headers: {

@@ -1,1 +1,27 @@
-<p>header works!</p>
+<!--<p>KKK header works!</p>-->
+<!--<div>{{ user | json }}</div>-->
+<!--<div>-->
+    <div>
+        <div class="device mobile">
+            <i class="pi pi-bars primeicons"></i>
+        </div>
+    </div>
+    <div>
+        @if( !!user ) {
+            <img
+                id="header-profile-image"
+                [src]="!!user ? user.picture : ''"
+                (click)="gotoProfilePage()"
+            />
+        }
+        @else {
+            <svg
+                class="svg-icon"
+                id="header-profile-image-placeholder"
+                (click)="gotoProfilePage()"
+            >
+                <use href="#icon-profile"></use>
+            </svg>
+        }
+    </div>
+<!--</div>-->

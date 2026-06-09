@@ -36,13 +36,17 @@ export class SplashPage implements OnInit {
             try {
                 setTimeout(() => {
 
-                    this.authService.ensureUserLoaded()
-                        .then((user: LoggedUser) => {
-                            onFinish(user);
+                    Promise.all([
+                        this.authService.ensureUserLoaded()
+
+                    ])
+                        .then((data: any[]) => {
+                            onFinish(data);
                         })
                         .catch((e: any) => {
                             console.log('errore a leaveSplashScreen');
                             console.log(e);
+                            onError(e);
                         })
 
                 }, SPLASH_SCREEN_TIME);
@@ -69,16 +73,24 @@ export class SplashPage implements OnInit {
             .catch((e: any) => {
                 console.log('errore');
                 console.error(e);
-                this.router.navigate(
-                    ['/error'],
-                    {
-                        state: {
-                            code: 'SPLASH_INIT_ERROR',
-                            message: e?.message || 'Errore durante inizializzazione',
-                            details: e
+
+                if( e === 'no-token' ) {
+                    this.authService.clearLoginData();
+                    this.router.navigate(['/access/sign-in']);
+                }
+                else {
+                    this.router.navigate(
+                        ['/error'],
+                        {
+                            state: {
+                                code: 'SPLASH_INIT_ERROR',
+                                message: e?.message || 'Errore durante inizializzazione',
+                                details: e
+                            }
                         }
-                    }
-                );
+                    );
+                }
+
             })
 
     }

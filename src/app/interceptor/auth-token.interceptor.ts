@@ -1,7 +1,8 @@
 import {HttpInterceptorFn} from '@angular/common/http';
 import {inject} from '@angular/core';
 import {AuthService} from '../services/auth';
-import {environment} from '../../environment';
+import {environment} from '../../environments';
+
 
 
 function getPathname(url: string): string {
