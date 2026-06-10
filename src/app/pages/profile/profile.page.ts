@@ -178,8 +178,7 @@ export class ProfilePage {
 
                     this.inWaiting.set(false);
 
-                    // console.log('avvio navigazione verso dashboard');
-                    // this.router.navigate(['/dashboard']);
+                    // TODO
 
                 })
                 .catch((e: any) => {
