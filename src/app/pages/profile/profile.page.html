@@ -1,7 +1,223 @@
-<div>Profile</div>
+<div class="page columns splash-page">
+
+    <div>{{ errors | json }}</div>
+
+    <div class="columns icon-title input-icon">
+
+        @if (!!previewUrl) {
+            <img
+                id="profile-image"
+                [src]="previewUrl"
+                (click)="profileImageInput.click()"
+            />
+        } @else {
+            <svg
+                class="svg-icon"
+                id="profile-image-placeholder"
+                (click)="profileImageInput.click()"
+            >
+                <use href="#camera-scan-1"></use>
+            </svg>
+        }
+
+        <input
+            #profileImageInput
+            type="file"
+            accept="image/*"
+            capture="environment"
+            (change)="onProfileImageSelected($event)"
+            style="display: none;"
+        />
+
+        @if (!errors.profilePicture && !!isInEdit ) {
+            <small id="profilePicture-help">Carica una immagine di profilo</small>
+        } @else {
+            <small id="profilePicture-error" class="error-message">{{ errors.profilePicture }}</small>
+        }
+
+    </div>
 
 
-<div>user</div>
-<div>{{ user | json }}</div>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="columns">
 
-<div>logout</div>
+        <div class="card flex justify-center">
+            <div class="flex flex-col gap-2 columns field">
+                <label for="fullName">Nome Completo</label>
+                <input
+                    pInputText
+                    id="fullName"
+                    aria-describedby="username-help"
+                    formControlName="fullName"
+                    placeholder="utente"
+                />
+                @if (!errors.fullName) {
+                    <small id="fullName-help"></small>
+                } @else {
+                    <small id="fullName-error" class="error-message">{{ errors.fullName }}</small>
+                }
+            </div>
+        </div>
+
+
+        <div class="flex flex-col gap-2 columns field">
+            <label for="email">Email</label>
+            <input
+                pInputText
+                id="email"
+                aria-describedby="email-help"
+                formControlName="email"
+                placeholder="user@mail.com"
+            />
+            @if (!errors.email) {
+                <small id="email-help"></small>
+            } @else {
+                <small id="email-error" class="error-message">{{ errors.email }}</small>
+            }
+
+        </div>
+
+        <div class="flex flex-col gap-2 columns field">
+            <label for="mobilenumber">Telefono</label>
+            <input
+                pInputText
+                id="mobilenumber"
+                aria-describedby="mobilenumber-help"
+                formControlName="mobilenumber"
+                placeholder="+39 123 4567890"
+                [readonly]="!isInEdit"
+            />
+            @if (!errors.mobilenumber) {
+                <small id="mobilenumber-help"></small>
+            } @else {
+                <small id="mobilenumber-error" class="error-message">{{ errors.mobilenumber }}</small>
+            }
+
+        </div>
+
+        @if (!!isInEdit) {
+            <div class="flex flex-col gap-2 columns field">
+                <label for="currentPassword">Vecchia Password</label>
+                <div class="input-icon">
+                    <input
+                        pInputText
+                        id="currentPassword"
+                        aria-describedby="currentPassword-help"
+                        formControlName="currentPassword"
+                        placeholder="abc@DEF_ghi#99985-15"
+                        type="{{ !visibility.currentPassword ? 'password' : 'text' }}"
+
+                    />
+                    <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('currentPassword')">
+                        @if (!!visibility.currentPassword) {
+                            <use href="#occhio-aperto"></use>
+                        } @else {
+                            <use href="#occhio-sbarrato"></use>
+                        }
+                    </svg>
+                </div>
+            </div>
+
+
+            <div class="flex flex-col gap-2 columns field">
+                <label for="newPassword">Nuova Password</label>
+                <div class="input-icon">
+                    <input
+                        pInputText
+                        id="newPassword"
+                        aria-describedby="password-help"
+                        formControlName="newPassword"
+                        placeholder="abc@DEF_ghi#99985-14"
+                        type="{{ !visibility.newPassword ? 'password' : 'text' }}"
+
+                    />
+                    <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('newPassword')">
+                        @if (!!visibility.newPassword) {
+                            <use href="#occhio-aperto"></use>
+                        } @else {
+                            <use href="#occhio-sbarrato"></use>
+                        }
+                    </svg>
+                </div>
+                @if (!errors.newPassword) {
+                    <small id="password-help">La password deve lunga almeno 8</small>
+                } @else {
+                    <small id="password-error" class="error-message">{{ errors.newPassword }}</small>
+                }
+            </div>
+
+
+            <div class="flex flex-col gap-2 columns field">
+                <label for="confirmPassword">Conferma Password</label>
+                <div class="input-icon">
+                    <input
+                        pInputText
+                        id="confirmPassword"
+                        aria-describedby="password-help"
+                        formControlName="confirmPassword"
+                        placeholder="abc@DEF_ghi#99985-14"
+                        type="{{ !visibility.confirmPassword ? 'password' : 'text' }}"
+                    />
+                    <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('confirmPassword')">
+                        @if (!!visibility.confirmPassword) {
+                            <use href="#occhio-aperto"></use>
+                        } @else {
+                            <use href="#occhio-sbarrato"></use>
+                        }
+                    </svg>
+                </div>
+                @if (!errors.confirmPassword) {
+                    <small id="confirmPassword-help"></small>
+                } @else {
+                    <small id="confirmPassword-error" class="error-message">{{ errors.confirmPassword }}</small>
+                }
+
+            </div>
+
+            <div id="signup-button">
+                @if (!!inWaiting()) {
+                    <svg class="svg-icon inside-button">
+                        <use href="#orologio-1-1"></use>
+                    </svg>
+                }
+                <p-button
+                    label="{{ !!inWaiting() ? 'in attesa' : 'save' }}"
+                    type="submit"
+                    [disabled]="!!inWaiting()"
+                    [rounded]="true"
+                    [size]="'small'"
+                    [style]="{padding: '0px 20px 0px '+ ( !inWaiting() ? '20px' : '32px' )}"
+                ></p-button>
+            </div>
+        }
+        @else {
+
+            <div class="bottom-button-container">
+
+                <p-button
+                    label="{{ 'modifica' }}"
+                    type="button"
+                    [rounded]="true"
+                    [size]="'small'"
+                    [style]="{padding: '0px 20px 0px 20px' }"
+                    (click)="edit()"
+                ></p-button>
+
+                <p-button
+                    variant="text"
+                    label="{{ 'logout' }}"
+                    type="button"
+                    [rounded]="true"
+                    [size]="'small'"
+                    [style]="{padding: '0px 20px 0px 20px', color: 'var(--dark-red-color)' }"
+                    (click)="logout()"
+                ></p-button>
+
+            </div>
+
+        }
+    </form>
+
+    <p *ngIf="errorMessage()" style="color: var(--medium-red-color);">{{ errorMessage() }}</p>
+
+
+</div>

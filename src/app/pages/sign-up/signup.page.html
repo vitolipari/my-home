@@ -71,7 +71,7 @@
 
         <div class="card flex justify-center">
             <div class="flex flex-col gap-2 columns field">
-                <label for="fullName">Full Name</label>
+                <label for="fullName">Nome completo</label>
                 <input
                     pInputText
                     id="fullName"
@@ -80,7 +80,7 @@
                     placeholder="utente"
                 />
                 @if (!errors.fullName) {
-                    <small id="fullName-help">Enter your username to reset your password.</small>
+                    <small id="fullName-help">Il tuo nome completo.</small>
                 }
                 @else {
                     <small id="fullName-error" class="error-message">{{ errors.fullName }}</small>
@@ -99,7 +99,7 @@
                 placeholder="user@mail.com"
             />
             @if (!errors.email) {
-                <small id="email-help"></small>
+                <small id="email-help">La tua email</small>
             }
             @else {
                 <small id="email-error" class="error-message">{{ errors.email }}</small>
@@ -112,7 +112,7 @@
         </div>
 
         <div class="flex flex-col gap-2 columns field">
-            <label for="mobilenumber">Mobile Number</label>
+            <label for="mobilenumber">Telefono</label>
             <input
                 pInputText
                 id="mobilenumber"
@@ -122,8 +122,7 @@
             />
             @if (!errors.mobilenumber) {
                 <small id="mobilenumber-help">
-                    Il numero di cellulare a cui far arrivare il pin OTP necessario per la
-                    registrazione
+                    Il numero di cellulare
                 </small>
             }
             @else {
@@ -152,7 +151,7 @@
                 </svg>
             </div>
             @if (!errors.password) {
-                <small id="password-help">La password deve </small>
+                <small id="password-help">La password deve essere lunga almeno 8</small>
             }
             @else {
                 <small id="password-error" class="error-message">{{ errors.password }}</small>
@@ -160,7 +159,7 @@
         </div>
 
         <div class="flex flex-col gap-2 columns field">
-            <label for="confirmPassword">Confirm Password</label>
+            <label for="confirmPassword">Conferma Password</label>
             <div class="input-icon">
                 <input
                     pInputText

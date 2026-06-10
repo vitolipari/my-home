@@ -2,7 +2,7 @@ import {Injectable, inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {from, Observable, switchMap} from 'rxjs';
 import {
-    ConfirmRequest,
+    ConfirmRequest, EditProfileRequestType,
     LoggedUser,
     LoginRequest,
     LoginResponse,
@@ -39,4 +39,7 @@ export class AuthApiService {
     //     this.authService.clearLoginData();
     //     return;
     // }
+    editProfile(payload: EditProfileRequestType) {
+        return this.http.put<void>(`/profile/${ payload.id }`, payload);
+    }
 }

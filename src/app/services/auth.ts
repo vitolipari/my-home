@@ -2,7 +2,7 @@ import {Injectable, computed, inject, signal} from '@angular/core';
 import {firstValueFrom, Observable} from 'rxjs';
 import {AuthApiService} from './auth-api';
 import {
-    ConfirmRequest,
+    ConfirmRequest, EditProfileRequestType,
     LoggedUser,
     LoginRequest,
     SignUpRequest
@@ -57,6 +57,21 @@ export class AuthService {
                 })
                 .catch((e: any) => {
                     console.log('errore al signUp di auth')
+                    console.log(e);
+                    debugger;
+                    return Promise.reject(e);
+                })
+        );
+    }
+
+    editProfile(payload: EditProfileRequestType) {
+        return (
+            firstValueFrom(this.authApi.editProfile(payload))
+                .then((result: any) => {
+                    return result;
+                })
+                .catch((e: any) => {
+                    console.log('errore al editProfile di auth')
                     console.log(e);
                     debugger;
                     return Promise.reject(e);
@@ -179,4 +194,5 @@ export class AuthService {
     //         return null;
     //     }
     // }
+
 }

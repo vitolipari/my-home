@@ -24,6 +24,19 @@ export interface SignUpRequest {
     password: string;
     confirmPassword: string;
     fullName: string;
+    mobilenumber: string | number;
+    profilePicture: string;
+}
+
+export interface EditProfileRequestType {
+    id: number;
+    email: string;
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+    fullName: string;
+    mobilenumber: string | number;
+    profilePicture: string;
 }
 
 export interface ConfirmRequest {
