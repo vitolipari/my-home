@@ -1,24 +1,6 @@
-<!--<h1>Sign Up</h1>-->
-
-<!--<form [formGroup]="form" (ngSubmit)="submit()">-->
-<!--    <input type="text" formControlName="fullName" placeholder="Username" />-->
-<!--    <input type="email" formControlName="email" placeholder="Email" />-->
-<!--    <input type="password" formControlName="password" placeholder="Password" />-->
-<!--    <input type="password" formControlName="confirmPassword" placeholder="Conferma password" />-->
-
-<!--    <button type="submit" [disabled]="loading()">Registrati</button>-->
-<!--</form>-->
-
-<!--<p *ngIf="message()">{{ message() }}</p>-->
-
-<!--<a routerLink="/access/sign-in">Hai già un account?</a>-->
-
-
 <div class="page columns splash-page">
     <div class="columns icon-title input-icon">
-<!--        <svg class="svg-icon" id="profile-image-placeholder">-->
-<!--            <use href="#user_filled-plus"></use>-->
-<!--        </svg>-->
+
 
         @if (!!previewUrl) {
             <img
@@ -27,14 +9,7 @@
                 (click)="profileImageInput.click()"
             />
         } @else {
-            <!--            per il conferma-->
-<!--            <svg-->
-<!--                class="svg-icon"-->
-<!--                id="profile-image-placeholder"-->
-<!--                (click)="profileImageInput.click()"-->
-<!--            >-->
-<!--                <use href="#user_filled-plus"></use>-->
-<!--            </svg>-->
+
             <div>
 
             </div>
@@ -43,7 +18,7 @@
                 id="profile-image-placeholder"
                 (click)="profileImageInput.click()"
             >
-                <use href="#camera-scan-1" ></use>
+                <use href="#camera-scan-1"></use>
             </svg>
         }
 
@@ -58,8 +33,7 @@
 
         @if (!errors.profilePicture) {
             <small id="profilePicture-help">Carica una immagine di profilo</small>
-        }
-        @else {
+        } @else {
             <small id="profilePicture-error" class="error-message">{{ errors.profilePicture }}</small>
         }
 
@@ -69,8 +43,8 @@
 
     <form [formGroup]="form" (ngSubmit)="submit()" class="columns">
 
-        <div class="card flex justify-center">
-            <div class="flex flex-col gap-2 columns field">
+        <div class="card flex justify-center signup-field">
+            <div class="flex flex-col gap-2 field" style="margin-bottom: 0px !important;">
                 <label for="fullName">Nome completo</label>
                 <input
                     pInputText
@@ -78,128 +52,139 @@
                     aria-describedby="username-help"
                     formControlName="fullName"
                     placeholder="utente"
+                    class="fixed-value-input"
                 />
-                @if (!errors.fullName) {
-                    <small id="fullName-help">Il tuo nome completo.</small>
-                }
-                @else {
-                    <small id="fullName-error" class="error-message">{{ errors.fullName }}</small>
-                }
             </div>
+            @if (!errors.fullName) {
+                <small id="fullName-help">Il tuo nome completo.</small>
+            } @else {
+                <small id="fullName-error" class="error-message">{{ errors.fullName }}</small>
+            }
         </div>
 
 
-        <div class="flex flex-col gap-2 columns field">
-            <label for="email">Email</label>
-            <input
-                pInputText
-                id="email"
-                aria-describedby="email-help"
-                formControlName="email"
-                placeholder="user@mail.com"
-            />
-            @if (!errors.email) {
-                <small id="email-help">La tua email</small>
-            }
-            @else {
-                <small id="email-error" class="error-message">{{ errors.email }}</small>
-            }
-            <a routerLink="/access/sign-in">
-                <div>
-                    SignIn
-                </div>
-            </a>
-        </div>
-
-        <div class="flex flex-col gap-2 columns field">
-            <label for="mobilenumber">Telefono</label>
-            <input
-                pInputText
-                id="mobilenumber"
-                aria-describedby="mobilenumber-help"
-                formControlName="mobilenumber"
-                placeholder="+39 123 4567890"
-            />
-            @if (!errors.mobilenumber) {
-                <small id="mobilenumber-help">
-                    Il numero di cellulare
-                </small>
-            }
-            @else {
-                <small id="mobilenumber-error" class="error-message">{{ errors.mobilenumber }}</small>
-            }
-
-        </div>
-
-        <div class="flex flex-col gap-2 columns field">
-            <label for="password">Password</label>
-            <div class="input-icon">
+        <div class="card flex justify-center signup-field">
+            <div class="flex flex-col gap-2 field" style="margin-bottom: 0px !important;">
+                <label for="email">Email</label>
                 <input
                     pInputText
-                    id="password"
-                    aria-describedby="password-help"
-                    formControlName="password"
-                    placeholder="abc@DEF_ghi#99985-14"
-                    type="{{ !visibility.password ? 'password' : 'text' }}"
+                    id="email"
+                    aria-describedby="email-help"
+                    formControlName="email"
+                    placeholder="user@mail.com"
+                    class="fixed-value-input"
                 />
-                <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('password')">
-                    @if (!!visibility.password) {
-                        <use href="#occhio-aperto"></use>
-                    } @else {
-                        <use href="#occhio-sbarrato"></use>
-                    }
-                </svg>
+            </div>
+            @if (!errors.email) {
+                <!--                <small id="email-help">La tua email</small>-->
+                <a routerLink="/access/sign-in">
+                    <div>
+                        SignIn
+                    </div>
+                </a>
+            } @else {
+                <small id="email-error" class="error-message">{{ errors.email }}</small>
+            }
+
+        </div>
+
+        <div class="card flex justify-center">
+            <div class="flex flex-col gap-2 field">
+                <label for="mobilenumber">Telefono</label>
+                <input
+                    pInputText
+                    id="mobilenumber"
+                    aria-describedby="mobilenumber-help"
+                    formControlName="mobilenumber"
+                    placeholder="+39 123 4567890"
+                    class="fixed-value-input"
+                />
+            </div>
+            @if (!errors.mobilenumber) {
+                <small class="field-small" id="mobilenumber-help"></small>
+            } @else {
+                <small class="field-small error-message" id="mobilenumber-error">{{ errors.mobilenumber }}</small>
+            }
+        </div>
+
+        <div class="card flex justify-center signup-field">
+            <div class="flex flex-col gap-2 field" style="margin-bottom: 0rem !important;">
+                <label for="password">Password</label>
+                <div class="input-icon">
+                    <input
+                        pInputText
+                        id="password"
+                        aria-describedby="password-help"
+                        formControlName="password"
+                        placeholder="abc@DEF_ghi#99985-14"
+                        type="{{ !visibility.password ? 'password' : 'text' }}"
+                    />
+                    <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('password')">
+                        @if (!!visibility.password) {
+                            <use href="#occhio-aperto"></use>
+                        } @else {
+                            <use href="#occhio-sbarrato"></use>
+                        }
+                    </svg>
+                </div>
             </div>
             @if (!errors.password) {
                 <small id="password-help">La password deve essere lunga almeno 8</small>
-            }
-            @else {
+            } @else {
                 <small id="password-error" class="error-message">{{ errors.password }}</small>
             }
         </div>
 
-        <div class="flex flex-col gap-2 columns field">
-            <label for="confirmPassword">Conferma Password</label>
-            <div class="input-icon">
-                <input
-                    pInputText
-                    id="confirmPassword"
-                    aria-describedby="password-help"
-                    formControlName="confirmPassword"
-                    placeholder="abc@DEF_ghi#99985-14"
-                    type="{{ !visibility.confirmPassword ? 'password' : 'text' }}"
-                />
-                <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('confirmPassword')">
-                    @if (!!visibility.confirmPassword) {
-                        <use href="#occhio-aperto"></use>
-                    } @else {
-                        <use href="#occhio-sbarrato"></use>
-                    }
-                </svg>
+        <div class="card flex justify-center">
+            <div class="flex flex-col gap-2 field">
+                <label for="confirmPassword">Conferma Password</label>
+                <div class="input-icon">
+                    <input
+                        pInputText
+                        id="confirmPassword"
+                        aria-describedby="password-help"
+                        formControlName="confirmPassword"
+                        placeholder="abc@DEF_ghi#99985-14"
+                        type="{{ !visibility.confirmPassword ? 'password' : 'text' }}"
+                    />
+                    <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('confirmPassword')">
+                        @if (!!visibility.confirmPassword) {
+                            <use href="#occhio-aperto"></use>
+                        } @else {
+                            <use href="#occhio-sbarrato"></use>
+                        }
+                    </svg>
+                </div>
+
             </div>
             @if (!errors.confirmPassword) {
                 <small id="confirmPassword-help"></small>
-            }
-            @else {
+            } @else {
                 <small id="confirmPassword-error" class="error-message">{{ errors.confirmPassword }}</small>
             }
-
         </div>
 
-        <div id="signup-button">
-            @if (!!inWaiting()) {
-                <svg class="svg-icon inside-button">
-                    <use href="#orologio-1-1"></use>
-                </svg>
-            }
-            <p-button
-                label="{{ !!inWaiting() ? 'in attesa' : 'signup' }}"
-                type="submit"
-                [disabled]="!!inWaiting()"
-                [rounded]="true"
-                [size]="'small'"
-                [style]="{padding: '0px 20px 0px '+ ( !inWaiting() ? '20px' : '32px' )}"
-            ></p-button>
+
+        <div class="card flex justify-center">
+            <div class="flex flex-col gap-2">
+                <div class="bottom-button-container">
+                    <div id="signup-button">
+                        @if (!!inWaiting()) {
+                            <svg class="svg-icon inside-button">
+                                <use href="#orologio-1-1"></use>
+                            </svg>
+                        }
+                        <p-button
+                            label="{{ !!inWaiting() ? 'in attesa' : 'signup' }}"
+                            type="submit"
+                            [disabled]="!!inWaiting()"
+                            [rounded]="true"
+                            [size]="'small'"
+                            [style]="{padding: '0px 20px 0px '+ ( !inWaiting() ? '20px' : '32px' )}"
+                        ></p-button>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 

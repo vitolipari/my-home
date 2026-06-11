@@ -195,4 +195,17 @@ export class AuthService {
     //     }
     // }
 
+
+    updateCurrentUser(data: Partial<LoggedUser> | any): void {
+
+        if( !data.password ) delete data.password;
+        if( !data.currentPassword ) delete data.currentPassword;
+        if( !data.newPassword ) delete data.newPassword;
+
+        this.currentUser.update(user => ({
+            ...user!,
+            ...data
+        }));
+    }
+
 }

@@ -11,4 +11,26 @@ and (orientation: portrait)
     {
         display: none;
     }
+
+    .field {
+        /*border: solid #d00 1px;*/
+        flex-direction: column;
+        align-items: flex-start;
+        /*margin-left: calc(35%);*/
+        margin-bottom: 2rem !important;
+    }
+
+    .fixed-value-input {
+        background: var(--color-background-3) !important;
+        border-color: var(--color-background-2) !important;
+    }
+
+    .bottom-field {
+        width: 100%;
+    }
+
+    .signup-field {
+        margin-bottom: 2rem;
+    }
+
 }

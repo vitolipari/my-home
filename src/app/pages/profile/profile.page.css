@@ -7,5 +7,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    justify-self: center;
+    min-width: 320px;
+    width: 75%;
+    max-width: 640px;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 
+/*.fixed-value-input {*/
+    /*background: var(--color-background-1) !important;*/
+    /*border-color: var(--color-background-1) !important;*/
+/*}*/

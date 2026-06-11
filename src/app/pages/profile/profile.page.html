@@ -1,6 +1,6 @@
 <div class="page columns splash-page">
 
-    <div>{{ errors | json }}</div>
+    <!--    <div>{{ errors | json }}</div>-->
 
     <div class="columns icon-title input-icon">
 
@@ -29,10 +29,10 @@
             style="display: none;"
         />
 
-        @if (!errors.profilePicture && !!isInEdit ) {
-            <small id="profilePicture-help">Carica una immagine di profilo</small>
+        @if (!errors.profilePicture && !!isInEdit) {
+            <small class="field-small" style="margin-top: 0px;" id="profilePicture-help">Carica una immagine di profilo</small>
         } @else {
-            <small id="profilePicture-error" class="error-message">{{ errors.profilePicture }}</small>
+            <small class="field-small" style="margin-top: 0px;" id="profilePicture-error" class="error-message">{{ errors.profilePicture }}</small>
         }
 
     </div>
@@ -41,7 +41,7 @@
     <form [formGroup]="form" (ngSubmit)="submit()" class="columns">
 
         <div class="card flex justify-center">
-            <div class="flex flex-col gap-2 columns field">
+            <div class="flex flex-col gap-2 field">
                 <label for="fullName">Nome Completo</label>
                 <input
                     pInputText
@@ -49,169 +49,221 @@
                     aria-describedby="username-help"
                     formControlName="fullName"
                     placeholder="utente"
+                    [readonly]="!isInEdit"
+                    [class]="!!isInEdit ? '': 'fixed-value-input'"
                 />
-                @if (!errors.fullName) {
-                    <small id="fullName-help"></small>
-                } @else {
-                    <small id="fullName-error" class="error-message">{{ errors.fullName }}</small>
-                }
             </div>
+            @if (!errors.fullName) {
+                <small class="field-small" id="fullName-help"></small>
+            } @else {
+                <small class="field-small" id="fullName-error" class="error-message">{{ errors.fullName }}</small>
+            }
         </div>
 
 
-        <div class="flex flex-col gap-2 columns field">
-            <label for="email">Email</label>
-            <input
-                pInputText
-                id="email"
-                aria-describedby="email-help"
-                formControlName="email"
-                placeholder="user@mail.com"
-            />
+        <div class="card flex justify-center">
+            <div class="flex flex-col gap-2 field">
+                <label for="email">Email</label>
+                <input
+                    pInputText
+                    id="email"
+                    aria-describedby="email-help"
+                    formControlName="email"
+                    placeholder="user@mail.com"
+                    [readonly]="!isInEdit"
+                    [class]="!!isInEdit ? '': 'fixed-value-input'"
+                />
+
+            </div>
             @if (!errors.email) {
-                <small id="email-help"></small>
+                <small class="field-small" id="email-help"></small>
             } @else {
-                <small id="email-error" class="error-message">{{ errors.email }}</small>
+                <small class="field-small" id="email-error" class="error-message">{{ errors.email }}</small>
             }
-
         </div>
 
-        <div class="flex flex-col gap-2 columns field">
-            <label for="mobilenumber">Telefono</label>
-            <input
-                pInputText
-                id="mobilenumber"
-                aria-describedby="mobilenumber-help"
-                formControlName="mobilenumber"
-                placeholder="+39 123 4567890"
-                [readonly]="!isInEdit"
-            />
+
+        <div class="card flex justify-center">
+            <div class="flex flex-col gap-2 field">
+                <label for="mobilenumber">Telefono</label>
+                <input
+                    pInputText
+                    id="mobilenumber"
+                    aria-describedby="mobilenumber-help"
+                    formControlName="mobilenumber"
+                    placeholder="+39 123 4567890"
+                    [readonly]="!isInEdit"
+                    [class]="!!isInEdit ? '': 'fixed-value-input'"
+                />
+
+            </div>
             @if (!errors.mobilenumber) {
-                <small id="mobilenumber-help"></small>
+                <small class="field-small" id="mobilenumber-help"></small>
             } @else {
-                <small id="mobilenumber-error" class="error-message">{{ errors.mobilenumber }}</small>
+                <small class="field-small error-message" id="mobilenumber-error">{{ errors.mobilenumber }}</small>
             }
-
         </div>
+
 
         @if (!!isInEdit) {
-            <div class="flex flex-col gap-2 columns field">
-                <label for="currentPassword">Vecchia Password</label>
-                <div class="input-icon">
-                    <input
-                        pInputText
-                        id="currentPassword"
-                        aria-describedby="currentPassword-help"
-                        formControlName="currentPassword"
-                        placeholder="abc@DEF_ghi#99985-15"
-                        type="{{ !visibility.currentPassword ? 'password' : 'text' }}"
 
-                    />
-                    <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('currentPassword')">
-                        @if (!!visibility.currentPassword) {
-                            <use href="#occhio-aperto"></use>
-                        } @else {
-                            <use href="#occhio-sbarrato"></use>
-                        }
-                    </svg>
+            @if (!!isInChangePassword) {
+
+
+                <div class="card flex justify-center">
+                    <div class="flex flex-col gap-2 field">
+                        <label for="currentPassword">Vecchia Password</label>
+                        <div class="input-icon">
+                            <input
+                                pInputText
+                                id="currentPassword"
+                                aria-describedby="currentPassword-help"
+                                formControlName="currentPassword"
+                                placeholder="abc@DEF_ghi#99985-15"
+                                type="{{ !visibility.currentPassword ? 'password' : 'text' }}"
+
+                            />
+                            <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('currentPassword')">
+                                @if (!!visibility.currentPassword) {
+                                    <use href="#occhio-aperto"></use>
+                                } @else {
+                                    <use href="#occhio-sbarrato"></use>
+                                }
+                            </svg>
+                        </div>
+                    </div>
+                    @if (!errors.currentPassword) {
+                        <small class="field-small" id="currentPassword-help"></small>
+                    } @else {
+                        <small class="field-small" id="currentPassword-error" class="error-message">{{ errors.currentPassword }}</small>
+                    }
+                </div>
+
+                <div class="card flex justify-center">
+                    <div class="flex flex-col gap-2 field">
+                        <label for="newPassword">Nuova Password</label>
+                        <div class="input-icon">
+                            <input
+                                pInputText
+                                id="newPassword"
+                                aria-describedby="password-help"
+                                formControlName="newPassword"
+                                placeholder="abc@DEF_ghi#99985-14"
+                                type="{{ !visibility.newPassword ? 'password' : 'text' }}"
+
+                            />
+                            <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('newPassword')">
+                                @if (!!visibility.newPassword) {
+                                    <use href="#occhio-aperto"></use>
+                                } @else {
+                                    <use href="#occhio-sbarrato"></use>
+                                }
+                            </svg>
+                        </div>
+                    </div>
+                    @if (!errors.newPassword) {
+                        <small class="field-small" id="password-help">La password deve lunga almeno 8</small>
+                    } @else {
+                        <small class="field-small" id="password-error" class="error-message">{{ errors.newPassword }}</small>
+                    }
+                </div>
+
+                <div class="card flex justify-center">
+                    <div class="flex flex-col gap-2 field">
+                        <label for="confirmPassword">Conferma Password</label>
+                        <div class="input-icon">
+                            <input
+                                pInputText
+                                id="confirmPassword"
+                                aria-describedby="password-help"
+                                formControlName="confirmPassword"
+                                placeholder="abc@DEF_ghi#99985-14"
+                                type="{{ !visibility.confirmPassword ? 'password' : 'text' }}"
+                            />
+                            <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('confirmPassword')">
+                                @if (!!visibility.confirmPassword) {
+                                    <use href="#occhio-aperto"></use>
+                                } @else {
+                                    <use href="#occhio-sbarrato"></use>
+                                }
+                            </svg>
+                        </div>
+
+                    </div>
+                    @if (!errors.confirmPassword) {
+                        <small class="field-small" id="confirmPassword-help"></small>
+                    } @else {
+                        <small class="field-small" id="confirmPassword-error" class="error-message">{{ errors.confirmPassword }}</small>
+                    }
+                </div>
+            } @else {
+
+                <div class="card flex justify-center">
+                    <div class="flex flex-col gap-2">
+                        <div class="bottom-button-container">
+                            <p-button
+                                variant="text"
+                                label="{{ 'cambia password' }}"
+                                type="button"
+                                [rounded]="true"
+                                [size]="'small'"
+                                [style]="{padding: '0px 20px 0px 20px', color: 'var(--dark-red-color)' }"
+                                (click)="isInChangePassword = true;"
+                            ></p-button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="card flex justify-center">
+                <div class="flex flex-col gap-2">
+                    <div class="bottom-button-container">
+                        <div id="signup-button">
+                            @if (!!inWaiting()) {
+                                <svg class="svg-icon inside-button">
+                                    <use href="#orologio-1-1"></use>
+                                </svg>
+                            }
+                            <p-button
+                                label="{{ !!inWaiting() ? 'in attesa' : 'save' }}"
+                                type="submit"
+                                [disabled]="!!inWaiting()"
+                                [rounded]="true"
+                                [size]="'small'"
+                                [style]="{padding: '0px 20px 0px '+ ( !inWaiting() ? '20px' : '32px' )}"
+                            ></p-button>
+                        </div>
+                    </div>
                 </div>
             </div>
+        } @else {
 
 
-            <div class="flex flex-col gap-2 columns field">
-                <label for="newPassword">Nuova Password</label>
-                <div class="input-icon">
-                    <input
-                        pInputText
-                        id="newPassword"
-                        aria-describedby="password-help"
-                        formControlName="newPassword"
-                        placeholder="abc@DEF_ghi#99985-14"
-                        type="{{ !visibility.newPassword ? 'password' : 'text' }}"
+            <div class="card flex justify-center">
+                <div class="flex flex-col gap-2">
+                    <div class="bottom-button-container">
 
-                    />
-                    <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('newPassword')">
-                        @if (!!visibility.newPassword) {
-                            <use href="#occhio-aperto"></use>
-                        } @else {
-                            <use href="#occhio-sbarrato"></use>
-                        }
-                    </svg>
+                        <p-button
+                            label="{{ 'modifica' }}"
+                            type="button"
+                            [rounded]="true"
+                            [size]="'small'"
+                            [style]="{padding: '0px 20px 0px 20px' }"
+                            (click)="edit()"
+                        ></p-button>
+
+                        <p-button
+                            variant="text"
+                            label="{{ 'logout' }}"
+                            type="button"
+                            [rounded]="true"
+                            [size]="'small'"
+                            [style]="{padding: '0px 20px 0px 20px', color: 'var(--dark-red-color)' }"
+                            (click)="logout()"
+                        ></p-button>
+
+                    </div>
                 </div>
-                @if (!errors.newPassword) {
-                    <small id="password-help">La password deve lunga almeno 8</small>
-                } @else {
-                    <small id="password-error" class="error-message">{{ errors.newPassword }}</small>
-                }
-            </div>
-
-
-            <div class="flex flex-col gap-2 columns field">
-                <label for="confirmPassword">Conferma Password</label>
-                <div class="input-icon">
-                    <input
-                        pInputText
-                        id="confirmPassword"
-                        aria-describedby="password-help"
-                        formControlName="confirmPassword"
-                        placeholder="abc@DEF_ghi#99985-14"
-                        type="{{ !visibility.confirmPassword ? 'password' : 'text' }}"
-                    />
-                    <svg class="svg-icon icon-in-input-at-right" (click)="toggleVisibility('confirmPassword')">
-                        @if (!!visibility.confirmPassword) {
-                            <use href="#occhio-aperto"></use>
-                        } @else {
-                            <use href="#occhio-sbarrato"></use>
-                        }
-                    </svg>
-                </div>
-                @if (!errors.confirmPassword) {
-                    <small id="confirmPassword-help"></small>
-                } @else {
-                    <small id="confirmPassword-error" class="error-message">{{ errors.confirmPassword }}</small>
-                }
-
-            </div>
-
-            <div id="signup-button">
-                @if (!!inWaiting()) {
-                    <svg class="svg-icon inside-button">
-                        <use href="#orologio-1-1"></use>
-                    </svg>
-                }
-                <p-button
-                    label="{{ !!inWaiting() ? 'in attesa' : 'save' }}"
-                    type="submit"
-                    [disabled]="!!inWaiting()"
-                    [rounded]="true"
-                    [size]="'small'"
-                    [style]="{padding: '0px 20px 0px '+ ( !inWaiting() ? '20px' : '32px' )}"
-                ></p-button>
-            </div>
-        }
-        @else {
-
-            <div class="bottom-button-container">
-
-                <p-button
-                    label="{{ 'modifica' }}"
-                    type="button"
-                    [rounded]="true"
-                    [size]="'small'"
-                    [style]="{padding: '0px 20px 0px 20px' }"
-                    (click)="edit()"
-                ></p-button>
-
-                <p-button
-                    variant="text"
-                    label="{{ 'logout' }}"
-                    type="button"
-                    [rounded]="true"
-                    [size]="'small'"
-                    [style]="{padding: '0px 20px 0px 20px', color: 'var(--dark-red-color)' }"
-                    (click)="logout()"
-                ></p-button>
-
             </div>
 
         }

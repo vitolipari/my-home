@@ -13,7 +13,11 @@ import {Button, ButtonModule} from 'primeng/button';
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule, RouterLink, InputTextModule, FormsModule, Button],
     templateUrl: './signin.page.html',
-    styleUrls: ['./signin.page.css', '../sign-up/signup.page.css']
+    styleUrls: [
+        './signin.page.css'
+        , '../sign-up/signup.page.css'
+        , '../profile/profile.page.css'
+    ]
 })
 export class SignInPage {
     private readonly fb = inject(FormBuilder);

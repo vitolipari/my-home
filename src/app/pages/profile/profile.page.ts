@@ -14,7 +14,7 @@ import {HttpClient} from '@angular/common/http';
     templateUrl: './profile.page.html',
     styleUrls: [
         './profile.page.css',
-        '../sign-in/signin.page.css',
+        // '../sign-in/signin.page.css',
         '../sign-up/signup.page.css'
     ]
 })
@@ -36,12 +36,12 @@ export class ProfilePage {
     readonly errorMessage = signal('');
 
     readonly form = this.fb.nonNullable.group({
-        fullName: [this.user()?.username, Validators.required],
-        mobilenumber: [this.user()?.mobile, Validators.required],
-        email: [this.user()?.email, [Validators.required, Validators.email]],
-        currentPassword: ['', [Validators.required]],
-        newPassword: ['', [Validators.required, Validators.minLength(8)]],
-        confirmPassword: ['', [Validators.required]]
+        fullName: [this.user()?.username],
+        mobilenumber: [this.user()?.mobile],
+        email: [this.user()?.email, Validators.email],
+        currentPassword: [''],
+        newPassword: ['', [Validators.minLength(8)]],
+        confirmPassword: ['']
     });
 
     errors: any = {}
@@ -52,6 +52,7 @@ export class ProfilePage {
     };
 
     profileImageFile: File | null = null;
+    isInChangePassword: boolean = false;
 
 
     constructor(private cdr: ChangeDetectorRef) {}
@@ -131,6 +132,7 @@ export class ProfilePage {
          */
         value.profilePicture = this.previewUrl;
         value.id = this.user()?.id;
+        value.isInChangePassword = this.isInChangePassword;
 
         if (this.form.invalid) {
             // this.form.markAllAsTouched();
@@ -170,13 +172,16 @@ export class ProfilePage {
 
             this.authService.editProfile(value)
                 .then((response: any) => {
-                    console.log('signup response');
+                    console.log('edit profile response');
                     console.log(response);
 
-                    this.authService.saveLoggedUser( response.user );
-                    this.authService.saveToken( response.accessToken );
+                    // this.authService.saveLoggedUser( response.user );
+                    // this.authService.saveToken( response.accessToken );
+
+                    this.authService.updateCurrentUser(value);
 
                     this.inWaiting.set(false);
+                    this.isInEdit = false;
 
                     // TODO
 
@@ -211,6 +216,9 @@ export class ProfilePage {
                     }
                     if( err.toLowerCase().trim().indexOf('unique') !== -1 ) {
                         this.errors.mobilenumber = 'Numero Esistente';
+                    }
+                    if( err.toLowerCase().trim().indexOf('password') !== -1 ) {
+                        this.errors.currentPassword = err;
                     }
 
 

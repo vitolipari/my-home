@@ -9,4 +9,57 @@ and (min-width: 1024px)
     {
         display: none;
     }
+
+
+    .field {
+        /*border: solid #00d 1px;*/
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--color-background-2);
+        border-radius: 6px;
+        padding: 0.2rem;
+    }
+
+    .field > LABEL {
+        padding-left: 1rem;
+    }
+
+    .fixed-value-input {
+        background: var(--color-background-2) !important;
+        border-color: var(--color-background-2) !important;
+    }
+
+    .bottom-field {
+        width: 100%;
+    }
+
+    .signup-field {
+        margin-bottom: 2rem;
+    }
+
+    .signup-field > SMALL
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 80%;
+        max-width: 640px;
+        align-self: center;
+        justify-items: center;
+        justify-self: center;
+    }
+
+    .signup-field > A
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        width: 80%;
+        max-width: 640px;
+        align-self: center;
+        justify-items: center;
+        justify-self: center;
+    }
+
 }
