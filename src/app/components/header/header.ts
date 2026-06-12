@@ -1,4 +1,4 @@
-import {Component, inject, Input} from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {LoggedUser} from '../../models/auth.models';
 import {JsonPipe} from '@angular/common';
 import {Router} from '@angular/router';
@@ -16,6 +16,7 @@ export class Header {
 
     @Input() user!: LoggedUser | null;
     @Input() isInProfilePage: boolean = false;
+    @Output() menuToggle = new EventEmitter<boolean>();
 
     private router = inject(Router);
 
@@ -30,5 +31,9 @@ export class Header {
 
     goBack() {
         window.history.back();
+    }
+
+    openMobileMenu() {
+        this.menuToggle.emit( true );
     }
 }

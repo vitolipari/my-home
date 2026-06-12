@@ -7,6 +7,7 @@
         <app-header
             [user]="user"
             [isInProfilePage]="!!isInProfilePage()"
+            (menuToggle)="drawerVisible = true"
         ></app-header>
     }
 
@@ -28,3 +29,21 @@
 <section class="base-text-style debug-device" id="mobile">mobile</section>
 <section class="base-text-style debug-device" id="tablet">tablet</section>
 <section class="base-text-style debug-device" id="desktop">desktop</section>
+
+
+<p-drawer
+    [(visible)]="drawerVisible"
+    position="bottom"
+    [modal]="true"
+    [dismissible]="true"
+    [showCloseIcon]="false"
+    [style]="{
+        height: '50vh',
+        borderTopLeftRadius: '24px',
+        borderTopRightRadius: '24px'
+      }"
+>
+    <mobile-menu
+        [user]="user()"
+    ></mobile-menu>
+</p-drawer>

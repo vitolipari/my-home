@@ -1,0 +1,89 @@
+<!--MobileMenu-->
+
+<!--<div>{{ user | json }}</div>-->
+
+
+@if (hasPermission('READ_USERS')) {
+    <section>
+        <svg
+            class="svg-icon"
+            (click)="gotoPage('')"
+        >
+            <!--            <use href="#utenti-icon-1"></use>-->
+            <use href="#utenti-icon-2"></use>
+        </svg>
+        <label>Utenti</label>
+    </section>
+}
+
+<section>
+    <svg
+        class="svg-icon"
+        (click)="gotoPage('')"
+    >
+        <use href="#devices-list-icon-1"></use>
+        <!--                    <use href="#devices-list-icon-2"></use>-->
+        <!--                    <use href="#devices-list-icon-3"></use>-->
+    </svg>
+    <label>Dispositivi</label>
+</section>
+
+<section>
+    <svg
+        class="svg-icon"
+        (click)="gotoPage('')"
+    >
+        <use href="#timer_icon_1"></use>
+        <!--                <use href="#timer_icon_2"></use>-->
+    </svg>
+    <label>Timer</label>
+</section>
+
+<section>
+    <svg
+        class="svg-icon"
+        (click)="gotoPage('')"
+    >
+        <use href="#scenario_icon_1"></use>
+        <!--                <use href="#scenario_icon_2"></use>-->
+        <!--                <use href="#scenario_icon_3"></use>-->
+    </svg>
+    <label>Scenari</label>
+</section>
+
+<section>
+    <svg
+        class="svg-icon"
+        (click)="gotoPage('')"
+    >
+        <!--        <use href="#logs_icon_1"></use>-->
+        <!--                <use href="#logs_icon_2"></use>-->
+        <use href="#logs_icon_3"></use>
+        <!--                <use href="#scenario_icon_3"></use>-->
+        <!--                <use href="#logs_icon_4"></use>-->
+    </svg>
+    <label>Log</label>
+</section>
+
+<!--  solo per test -->
+@if (hasPermission('NOT_EXISTS')) {
+    <section>
+        <span>icon</span>
+        <label>HIDDEN</label>
+    </section>
+}
+
+
+<section>
+    <svg
+        class="svg-icon"
+        (click)="gotoPage('')"
+    >
+        <!--        <use href="#settings_icon_1"></use>-->
+        <use href="#settings_icon_2"></use>
+        <!--                <use href="#settings_icon_3"></use>-->
+    </svg>
+    <label>Impostazioni</label>
+</section>
+
+

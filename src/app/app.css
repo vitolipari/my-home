@@ -3,3 +3,11 @@
     width: 100vw;
     max-width: 100vw;
 }
+
+.drawer-handle {
+    width: 48px;
+    height: 5px;
+    border-radius: 999px;
+    background: #ccc;
+    margin: 8px auto 16px;
+}

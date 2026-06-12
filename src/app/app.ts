@@ -8,12 +8,14 @@ import {AuthService} from './services/auth';
 import {LoggedUser} from './models/auth.models';
 import {JsonPipe} from '@angular/common';
 import {filter} from 'rxjs/operators';
+import { DrawerModule } from 'primeng/drawer';
+import {MobileMenuComponent} from './components/menu-component/mobile-menu.component';
 
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, SvgSprite, Header, JsonPipe],
+    imports: [RouterOutlet, SvgSprite, Header, JsonPipe, DrawerModule, MobileMenuComponent],
     templateUrl: `./app.html`
 })
 export class App {
@@ -35,6 +37,8 @@ export class App {
 
     readonly isInProfilePage = signal(false);
 
+
+    drawerVisible = false;
 
     constructor() {
         this.swUpdateService.init();
