@@ -7,21 +7,39 @@
         </div>
     </div>
     <div>
-        @if( !!user ) {
-            <img
-                id="header-profile-image"
-                [src]="!!user ? user.picture : ''"
-                (click)="gotoProfilePage()"
-            />
+
+        @if( !!isInProfilePage ) {
+<!--            <svg-->
+<!--                class="svg-icon"-->
+<!--                id="closer-header-profile-image-placeholder"-->
+<!--                (click)="gotoPreviousPage()"-->
+<!--            >-->
+<!--                <use href="#x-closer-circle-filled"></use>-->
+<!--            </svg>-->
+
+            <i
+                class="pi pi-times-circle svg-icon primeicons"
+                (click)="goBack()"
+            ></i>
         }
         @else {
-            <svg
-                class="svg-icon"
-                id="header-profile-image-placeholder"
-                (click)="gotoProfilePage()"
-            >
-                <use href="#icon-profile"></use>
-            </svg>
+            @if( !!user ) {
+                <img
+                    id="header-profile-image"
+                    [src]="!!user ? user.picture : ''"
+                    (click)="gotoProfilePage()"
+                />
+            }
+            @else {
+                <svg
+                    class="svg-icon"
+                    id="header-profile-image-placeholder"
+                    (click)="gotoProfilePage()"
+                >
+                    <use href="#header-profile-image-placeholder"></use>
+                </svg>
+            }
         }
+
     </div>
 <!--</div>-->

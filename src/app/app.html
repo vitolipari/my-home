@@ -6,6 +6,7 @@
     @if ( user(); as user ) {
         <app-header
             [user]="user"
+            [isInProfilePage]="!!isInProfilePage()"
         ></app-header>
     }
 

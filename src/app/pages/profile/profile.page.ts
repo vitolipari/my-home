@@ -7,6 +7,7 @@ import {Button, ButtonModule} from 'primeng/button';
 import {InputText, InputTextModule} from 'primeng/inputtext';
 import {HttpClient} from '@angular/common/http';
 
+
 @Component({
     selector: 'app-profile',
     standalone: true,
@@ -55,7 +56,11 @@ export class ProfilePage {
     isInChangePassword: boolean = false;
 
 
-    constructor(private cdr: ChangeDetectorRef) {}
+    constructor(
+        private cdr: ChangeDetectorRef
+    ) {}
+
+
 
 
     onProfileImageSelected(event: Event): void {
@@ -164,6 +169,9 @@ export class ProfilePage {
         // this.message.set('');
         // this.inWaiting = true;
 
+
+
+
         try {
             // const response = await this.authService.signUp(value);
             // console.log('response di signup');
@@ -174,6 +182,9 @@ export class ProfilePage {
                 .then((response: any) => {
                     console.log('edit profile response');
                     console.log(response);
+
+
+                    // debugger;
 
                     // this.authService.saveLoggedUser( response.user );
                     // this.authService.saveToken( response.accessToken );

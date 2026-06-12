@@ -20,9 +20,14 @@ and (orientation: portrait)
         margin-bottom: 2rem !important;
     }
 
+    .p-inputtext {
+        width: 100%;
+    }
+
     .fixed-value-input {
         background: var(--color-background-3) !important;
         border-color: var(--color-background-2) !important;
+        width: 100%;
     }
 
     .bottom-field {

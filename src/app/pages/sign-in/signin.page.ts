@@ -69,8 +69,8 @@ export class SignInPage {
                     console.log('signin response');
                     console.log(response);
 
-                    this.inWaiting.set(false);
 
+                    this.inWaiting.set(false);
                     console.log('avvio navigazione verso dashboard');
                     this.router.navigate(['/dashboard']);
 

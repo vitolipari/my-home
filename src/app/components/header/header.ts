@@ -15,11 +15,20 @@ import {Router} from '@angular/router';
 export class Header {
 
     @Input() user!: LoggedUser | null;
+    @Input() isInProfilePage: boolean = false;
 
     private router = inject(Router);
 
 
     gotoProfilePage() {
         this.router.navigate(['/profile/page']);
+    }
+
+    gotoPreviousPage() {
+
+    }
+
+    goBack() {
+        window.history.back();
     }
 }

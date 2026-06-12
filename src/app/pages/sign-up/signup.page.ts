@@ -162,6 +162,7 @@ export class SignUpPage {
                     console.log('signup response');
                     console.log(response);
 
+
                     this.authService.saveLoggedUser( response.user );
                     this.authService.saveToken( response.accessToken );
 

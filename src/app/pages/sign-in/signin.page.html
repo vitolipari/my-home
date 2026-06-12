@@ -60,11 +60,13 @@
             </div>
             @if (!errors.password) {
                 <small id="password-help" class="bottom-field">
+                    <!--
                     <a routerLink="/access/forgot-password">
                         <div>
                             Password dimenticata
                         </div>
                     </a>
+                    -->
                 </small>
             } @else {
                 <small id="password-error" class="error-message bottom-field">{{ errors.password }}</small>
@@ -76,7 +78,7 @@
                 <div class="bottom-button-container">
                     <div id="signup-button">
                         @if (!!inWaiting()) {
-                            <svg class="svg-icon inside-button">
+                            <svg class="svg-icon inside-button" style="top: 33px;">
                                 <use href="#orologio-1-1"></use>
                             </svg>
                         }

@@ -51,6 +51,9 @@
     align-self: flex-end;
 }
 
+.inside-button {
+    top: 33px;
+}
 
 /*.bottom-field {*/
 /*    width: 80%;*/

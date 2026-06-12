@@ -30,6 +30,7 @@
     /* Dimensioni */
     --small-font-size: 12px;
     --main-font-size: 14px;
+    --primeng-icon-font-size: 30px;
     --main-font-section-size: 14px;
     --main-medium-big-font-size: 16px;
     --main-big-font-size: 20px;
@@ -105,7 +106,8 @@ BODY {
 
 
 .primeicons {
-    font-size: var(--main-font-size);
+    /*font-size: var(--main-font-size);*/
+    font-size: var(--primeng-icon-font-size) !important;
     color: var(--color-text-2);
 }
 
